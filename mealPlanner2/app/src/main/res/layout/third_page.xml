@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- layout to ng header -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/header"
+        android:padding="16dp"
+        android:gravity="left">
+
+        <!-- TextView for the header text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CALENDAR"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+    </LinearLayout>
+    <!-- layout to ng header ends here -->
+
+
+    <TextView
+        android:layout_width="276dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="573dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="(di pa linked tong done btn mema lang)"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="300dp"
+        android:layout_marginBottom="73dp"
+        android:backgroundTint="#D8DBE0"
+        android:text="Back"/>
+
+    <!-- btnDone wala pa code sa thirdpage java -->
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="97dp"
+        android:layout_height="63dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="167dp"
+        android:backgroundTint="#D8DBE0"
+        android:text="DONE">
+
+    </Button>
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="330dp"
+        android:layout_height="317dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="162dp" />
+</RelativeLayout>

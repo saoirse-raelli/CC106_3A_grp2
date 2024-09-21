@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- layout to ng header -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/header"
+        android:padding="16dp"
+        android:gravity="left">
+
+        <!-- TextView for the header text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal Planner"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+    </LinearLayout>
+    <!-- layout to ng header ends here-->
+
+
+    <TextView
+        android:layout_width="334dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="95dp"
+        android:gravity="center"
+        android:text="this is second page pili ka muna aight? di pa naka align to hahaha"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="583dp"
+        android:text="Back" />
+
+
+    <Button
+        android:id="@+id/btnCalendar"
+        android:layout_width="151dp"
+        android:layout_height="112dp"
+        android:layout_below="@id/btnBack"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="-418dp"
+        android:text="CALENDAR" />
+
+
+    <!-- di pa to nakalink sa java -->
+    <Button
+        android:id="@+id/btnRecipe"
+        android:layout_width="151dp"
+        android:layout_height="112dp"
+        android:layout_below="@id/btnBack"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="-266dp"
+        android:text="RECIPE BOOK" />
+
+
+</RelativeLayout>
+
+
