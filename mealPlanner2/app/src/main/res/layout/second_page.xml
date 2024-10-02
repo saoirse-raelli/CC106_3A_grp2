@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#CBAD8D">
+
+    <!--HINDI MUNA TO GAGAMITIN
+    NAALIS MUNA TO DAHIL NAG BAWAS NG PAGE DUE TO REVISION-->
 
     <!-- layout to ng header -->
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/header"
-        android:padding="16dp"
+        android:padding="9dp"
         android:gravity="left">
 
         <!-- TextView for the header text -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="354dp"
             android:layout_height="wrap_content"
-            android:text="Meal Planner"
+            android:gravity="left"
+            android:text="Prep Mate"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:textSize="34sp"
+            android:textStyle="bold" />
     </LinearLayout>
     <!-- layout to ng header ends here-->
-
 
     <TextView
         android:layout_width="334dp"
@@ -34,7 +36,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="95dp"
         android:gravity="center"
-        android:text="this is second page pili ka muna aight? di pa naka align to hahaha"
+        android:text="i think mawawala na tong second page"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />

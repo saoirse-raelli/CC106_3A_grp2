@@ -20,12 +20,12 @@ public class ThirdPage extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openSecondPage();
+                openFirstPage();
             }
         });
     }
-    public void openSecondPage(){
-        Intent intent = new Intent(this, SecondPage.class);
+    public void openFirstPage(){
+        Intent intent = new Intent(this, FirstPage.class);
         startActivity(intent);
     }
 }

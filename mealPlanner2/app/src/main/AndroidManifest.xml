@@ -15,7 +15,7 @@
 
         <!-- Main launcher activity -->
         <activity
-            android:name=".LoginPage"
+            android:name=".SignUpPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,11 +25,11 @@
         </activity>
 
         <!-- Other activities -->
+        <activity android:name=".LoginPage"></activity>
         <activity android:name=".FirstPage"></activity>
         <activity android:name=".SecondPage"></activity>
         <activity android:name=".ThirdPage"></activity>
         <activity android:name=".FourthPage"></activity>
-        <activity android:name=".FifthPage"></activity>
         <activity android:name=".BreakfastPage"></activity>
         <activity android:name=".LunchPage"></activity>
         <activity android:name=".MeriendaPage"></activity>
@@ -37,6 +37,9 @@
         <activity android:name=".MidnightSnackPage"></activity>
         <activity android:name=".EditNoteActivity"></activity>
         <activity android:name=".HomePage"></activity>
+        <activity android:name=".BookBreakfast"></activity>
+        <activity android:name=".DatabaseHelper"></activity>
+
 
 
 

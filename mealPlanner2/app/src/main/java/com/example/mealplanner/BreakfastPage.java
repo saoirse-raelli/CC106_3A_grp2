@@ -24,6 +24,7 @@ public class BreakfastPage extends AppCompatActivity {
 
         titleTextView = findViewById(R.id.text_note_title);
         contentTextView = findViewById(R.id.text_note_content);
+
         Button editButton = findViewById(R.id.button_edit_note);
 
         updateNoteDisplay();

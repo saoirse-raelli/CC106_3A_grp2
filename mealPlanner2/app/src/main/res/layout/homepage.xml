@@ -1,68 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#e7e8e6">
 
-    <!-- Linear layout for the header background -->
+    <!-- layout to ng header -->
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@drawable/header"
-        android:padding="16dp"
+        android:padding="9dp"
         android:gravity="left">
-        <!-- header background ends here -->
-
 
         <!-- TextView for the header text -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Meal Planner Homepage"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:layout_marginStart="110dp"
+            android:gravity="left"
+            android:text="Homepage"
+            android:textColor="#3a2d28"
+            android:textSize="34sp"
+            android:textStyle="bold" />
     </LinearLayout>
     <!-- layout to ng header ends here -->
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="102dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="567dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="this page is for homepage"
-        android:textColor="@color/black"
-        android:textSize="19dp" />
-
-    <Button
-        android:id="@+id/btnCreate"
-        android:layout_width="258dp"
-        android:layout_height="75dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="394dp"
-        android:layout_marginEnd="71dp"
-        android:text="+ Create New Recipe" />
-
-    <Button
-        android:id="@+id/btnSet"
-        android:layout_width="258dp"
-        android:layout_height="75dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="501dp"
+        android:layout_marginTop="500dp"
         android:layout_marginEnd="70dp"
-        android:text="+ Set Meal Plan" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Set Meal Plan Button -->
+        <Button
+            android:id="@+id/btnSet"
+            android:layout_width="258dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="+ Set Meal Plan"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="0dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBreakfast"
+            android:layout_width="110dp"
+            android:layout_height="130dp"
+            android:gravity="bottom|center_horizontal"
+            android:text="Breakfast" />
+
+        <Button
+            android:id="@+id/btnLunch"
+            android:layout_width="110dp"
+            android:layout_height="130dp"
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginStart="10dp"
+            android:text="Lunch" />
+
+        <Button
+            android:id="@+id/btnDinner"
+            android:layout_width="110dp"
+            android:layout_height="130dp"
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginStart="10dp"
+            android:text="Dinner" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="298dp"
+        android:layout_marginEnd="0dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnSnack"
+            android:layout_width="110dp"
+            android:layout_height="130dp"
+            android:gravity="bottom|center_horizontal"
+            android:text="Snack" />
+
+        <Button
+            android:id="@+id/btnMidSnack"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginStart="10dp"
+            android:text="Midnight Snack" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

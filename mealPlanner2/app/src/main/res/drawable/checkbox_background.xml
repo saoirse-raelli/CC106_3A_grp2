@@ -2,12 +2,12 @@
     android:shape="rectangle">
 
     <!-- Background color -->
-    <solid android:color="#FD8DEE" /> <!-- Light blue background -->
+    <solid android:color="#ebe3db" /> <!-- Light blue background -->
 
     <!-- Border color and width -->
     <stroke
-        android:width="2dp"
-        android:color="#FFC107" /> <!-- Darker blue border -->
+        android:width="5dp"
+        android:color="#3a2d28" /> <!-- Darker blue border -->
 
     <!-- Rounded corners -->
     <corners android:radius="8dp" />

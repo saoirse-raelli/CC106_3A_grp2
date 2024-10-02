@@ -1,124 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#e7e8e6">
 
     <!-- layout to ng header -->
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@drawable/header"
-        android:padding="16dp"
-        android:gravity="left">
+        android:padding="9dp">
+
+        <!-- Button for the back button -->
+        <Button
+            android:id="@id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Back" />
 
         <!-- TextView for the header text -->
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Meal Planner"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            android:text="Set Meal Plan"
+            android:textColor="#3a2d28"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
     <!-- layout to ng header ends here -->
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="351dp"
+        android:layout_height="451dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="103dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="566dp"
-        android:padding="10dp"
-        android:text="setting the Meal Plan"
-        android:textColor="@color/black"
-        android:textSize="30dp" />
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="90dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnOpen"
-        android:layout_width="137dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="477dp"
-        android:layout_marginEnd="131dp"
-        android:layout_marginBottom="155dp"
-        android:backgroundTint="#D8DBE0"
-        android:text="Next"
-        android:textColor="#2E3131"
-        android:textSize="32dp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="17dp"
+            android:text="Setup Your Meal Plan:"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:textColor="#3a2d28"/>
+
+        <Button
+            android:id="@+id/btnOpen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="310dp"
+            android:backgroundTint="#D8DBE0"
+            android:padding="16dp"
+            android:text="Set Calendar"
+            android:textColor="#2E3131"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="194dp"
-        android:layout_marginEnd="84dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="80dp"
         android:background="@drawable/checkbox_background"
         android:gravity="left"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Label at the top -->
-        <TextView
-            android:id="@+id/label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="left"
-            android:text="User Requirements"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
         <!-- Checkbox for Breakfast -->
         <CheckBox
             android:id="@+id/checkBox1"
-            android:layout_width="193dp"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:padding="15dp"
+            android:textSize="17dp"
             android:text="Breakfast" />
 
         <!-- Checkbox for Lunch -->
         <CheckBox
             android:id="@+id/checkBox2"
-            android:layout_width="193dp"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:padding="15dp"
+            android:textSize="17dp"
             android:text="Lunch" />
 
         <!-- Checkbox for Dinner -->
         <CheckBox
             android:id="@+id/checkBox3"
-            android:layout_width="193dp"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:padding="15dp"
+            android:textSize="17dp"
             android:text="Merienda" />
 
         <!-- Checkbox for Snacks -->
         <CheckBox
             android:id="@+id/checkBox4"
-            android:layout_width="193dp"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:padding="15dp"
+            android:textSize="17dp"
             android:text="Dinner" />
 
         <!-- Checkbox for Drinks -->
         <CheckBox
             android:id="@+id/checkBox5"
-            android:layout_width="193dp"
+            android:layout_width="215dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:padding="15dp"
+            android:textSize="17dp"
             android:text="Midnight Snacks" />
 
     </LinearLayout>

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HomePage extends AppCompatActivity {
 
-    Button btnCreate, btnSet;
+    Button btnSet, btnBreakfast, btnLunch, btnDinner, btnSnack, btnMidSnack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +22,20 @@ public class HomePage extends AppCompatActivity {
             }
 
         });
+        btnBreakfast = (Button) findViewById(R.id.btnBreakfast);
+        btnBreakfast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openBookBreakfast();
+            }
+        });
     }
     public void openFirstPage() {
         Intent intent = new Intent(this, FirstPage.class);
         startActivity(intent);
     }
+    public void openBookBreakfast() {
+            Intent intent = new Intent(this, BookBreakfast.class);
+            startActivity(intent);
+        }
 }

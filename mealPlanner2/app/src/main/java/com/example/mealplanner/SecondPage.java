@@ -1,3 +1,10 @@
+/*
+ *HINDI MUNA TO GAGAMITIN
+ *
+ * NAALIS MUNA TO DAHIL NAG BAWAS NG PAGE DUE TO REVISION*/
+
+
+
 package com.example.mealplanner;
 
 import android.content.Intent;
@@ -9,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SecondPage extends AppCompatActivity {
 
-    Button btnBack, btnCalendar, btnRecipe;
+    Button btnBack, btnCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +41,6 @@ public class SecondPage extends AppCompatActivity {
             }
         });
 
-        // Initialize btnRecipe to navigate to ThirdPage
-        btnRecipe = (Button) findViewById(R.id.btnRecipe);
-        btnRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFifthPage();
-            }
-        });
     }
 
     // Method to navigate to FirstPage
@@ -53,12 +52,6 @@ public class SecondPage extends AppCompatActivity {
     // Method to navigate to ThirdPage
     public void openThirdPage() {
         Intent intent = new Intent(this, ThirdPage.class);
-        startActivity(intent);
-    }
-
-    // Method to navigate to FifthPage
-    public void openFifthPage() {
-        Intent intent = new Intent(this, FifthPage.class);
         startActivity(intent);
     }
 }
