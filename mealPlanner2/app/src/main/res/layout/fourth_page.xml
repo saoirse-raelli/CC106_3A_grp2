@@ -1,42 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Linear layout for the header background -->
+    <!-- layout to ng header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@drawable/header"
-        android:padding="9dp"
-        android:gravity="left">
+        android:padding="9dp">
+
+        <!-- Button for the back button -->
+        <Button
+            android:id="@id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Back" />
 
         <!-- TextView for the header text -->
         <TextView
-            android:layout_width="354dp"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:text="Prep Mate"
-            android:textColor="#FFFFFF"
-            android:textSize="34sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            android:text="Breakfast Recipes"
+            android:textColor="#3a2d28"
+            android:textSize="32sp"
             android:textStyle="bold" />
+
     </LinearLayout>
     <!-- layout to ng header ends here -->
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Vertical Layout for Meals -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/headerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/mealsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="448dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="221dp"
-        android:padding="10dp"
-        android:text="calendar toggle "
-        android:textColor="@color/black"
-        android:textSize="19dp" />
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="-1dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Breakfast Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_breakfast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Breakfast: "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_select_breakfast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:text="SELECT"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button_breakfast_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text=" + " />
+        </LinearLayout>
+
+        <!-- Lunch Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_lunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lunch: "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_select_lunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="90dp"
+                android:text="SELECT"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button_lunch_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text=" + " />
+        </LinearLayout>
+
+        <!-- Merienda Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_merienda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Merienda: "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_select_merienda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:text="SELECT"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button_merienda_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text=" + " />
+        </LinearLayout>
+
+        <!-- Dinner Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_dinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dinner: "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_select_dinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="88dp"
+                android:text="SELECT"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button_dinner_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text=" + " />
+        </LinearLayout>
+
+        <!-- Midnight Snack Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_midnightsnack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Midnight Snack: "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_select_midnight_snack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="SELECT"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button_midnight_snack_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text=" + " />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

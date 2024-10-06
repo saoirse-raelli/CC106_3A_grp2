@@ -39,6 +39,8 @@
         <activity android:name=".HomePage"></activity>
         <activity android:name=".BookBreakfast"></activity>
         <activity android:name=".DatabaseHelper"></activity>
+        <activity android:name=".SelectedDateActivity"></activity>
+
 
 
 
