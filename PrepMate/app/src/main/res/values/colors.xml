@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#CBB799</color> <!-- Example color for both the action bar and bottom nav -->
+    <color name="primaryDarkColor">#3D211A</color> <!-- For status bar in light theme -->
+    <color name="textColor">#3D211A</color> <!-- Text color for the action bar and bottom nav items -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFF</color>
+</resources>
