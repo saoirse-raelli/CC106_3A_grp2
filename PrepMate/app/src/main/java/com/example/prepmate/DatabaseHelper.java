@@ -95,6 +95,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_NOTE_PROCEDURES + " TEXT);";
         db.execSQL(createNotesTable);
 
+
+        String createRecipeTable = "CREATE TABLE " + TABLE_RECIPE + " ("
+        + COLUMN_RECIPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        + COLUMN_USER_ID + " INTEGER, "
+        + COLUMN_CATEGORY_ID + " INTEGER, "
+        + COLUMN_NOTE_ID + " INTEGER, "
+        + COLUMN_NOTE_TITLE + " TEXT, "
+        + COLUMN_NOTE_START_TIME + " TEXT, "
+        + COLUMN_NOTE_END_TIME + " TEXT, "
+        + COLUMN_NOTE_INGREDIENTS + " TEXT, "
+        + COLUMN_NOTE_PROCEDURES + " TEXT, "
+        + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "), "
+        + "FOREIGN KEY(" + COLUMN_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORY + "(" + COLUMN_CATEGORY_ID + "), "
+        + "FOREIGN KEY(" + COLUMN_NOTE_ID + ") REFERENCES " + TABLE_NOTES + "(" + COLUMN_NOTE_ID + "));";
+        db.execSQL(createRecipeTable);
+
+        String createCategoryTable = "CREATE TABLE " + TABLE_CATEGORY + " ("
+        + COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        + COLUMN_CATEGORY_NAME + " TEXT);";
+        db.execSQL(createCategoryTable);
+
+        String createCalendarTable = "CREATE TABLE " + TABLE_CALENDAR + " ("
+        + COLUMN_CALENDAR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        + COLUMN_USER_ID + " INTEGER, "
+        + COLUMN_RECIPE_ID + " INTEGER, "
+        + COLUMN_CALENDAR_SELECTEDDATE + " TEXT, "
+        + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "), "
+        + "FOREIGN KEY(" + COLUMN_RECIPE_ID + ") REFERENCES " + TABLE_RECIPE + "(" + COLUMN_RECIPE_ID + "));";
+        db.execSQL(createCalendarTable);
+
+
     }
 
     //METHODS FOR CREATING ACCOUNT
@@ -133,7 +164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return exists;
     }
-//method ends here
+
 
 
 
