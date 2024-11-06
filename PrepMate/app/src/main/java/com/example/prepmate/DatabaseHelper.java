@@ -20,6 +20,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table names
     private static final String TABLE_USERS = "Users";
     private static final String TABLE_NOTES = "Notes";
+    private static final String TABLE_RECIPE = "Recipe";
+    private static final String TABLE_CATEGORY = "Category";
+    private static final String TABLE_CALENDAR = "Calendar";
+    
 
     // Column names for Users table
     public static final String COLUMN_USER_ID = "user_id";
@@ -37,6 +41,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NOTE_INGREDIENTS = "ingredients";
     public static final String COLUMN_NOTE_PROCEDURES = "procedures";
 
+    // Database structure; Table: Recipe
+    public static final String COLUMN_RECIPE_ID = "recipe_id";
+    public static final String COLUMN_USER_ID = "user_id";
+    public static final String COLUMN_CATEGORY_ID = "category_id";
+    public static final String COLUMN_NOTE_ID = "note_id";
+    public static final String COLUMN_NOTE_TITLE = "title";
+    public static final String COLUMN_NOTE_START_TIME = "startTime";
+    public static final String COLUMN_NOTE_END_TIME = "endTime";
+    public static final String COLUMN_NOTE_INGREDIENTS = "ingredients";
+    public static final String COLUMN_NOTE_PROCEDURES = "procedures";
+
+    // Database structure; Table: Category
+    public static final String COLUMN_CATEGORY_ID = "category_id";
+    public static final String COLUMN_CATEGORY_NAME = "category_name";
+
+    // Database structure; Table: Calendar
+    public static final String COLUMN_CALENDAR_ID = "calendar_id";
+    public static final String COLUMN_USER_ID = "user_id";
+    public static final String COLUMN_RECIPE_ID = "recipe_id";
+    public static final String COLUMN_CALENDAR_SELECTEDDATE = "selectedDate";
+    
+    
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
