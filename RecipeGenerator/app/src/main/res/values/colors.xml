@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="earth">#625148</color>
+    <color name="suave">#524C39</color>
+    <color name="brook">#562D18</color>
+    <color name="beige">#AE967F</color>
+    <color name="nude">#E1D7C6</color>
+    <color name="dirtywhite">#E6E5E2</color>
+    <color name="grey">#6A7279</color>
+    <color name="friend">#F1A81A</color>
+    <color name="like">#2DA2E1</color>
+    <color name="food">#F47D2E</color>
+    <color name="good">#886CC4</color>
+    <color name="teal">#18acb6</color>
+
+
+
+
+
+</resources>
