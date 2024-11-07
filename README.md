@@ -16,4 +16,4 @@ Welcome to the Meal Planner App repository! This application is designed to help
 - **Meal Scheduling**: Plan your meals for the week effortlessly.
 - **Customization**: Tailor your meals to fit your dietary needs and preferences.
 - **User-Friendly Interface**: Navigate easily through the app with a clean and intuitive design.
-- **Meal Suggestions**: Get meal ideas based on your input.
+- **Meal Suggestions**: Get similar meal suggestions based on the recipe you pick.
