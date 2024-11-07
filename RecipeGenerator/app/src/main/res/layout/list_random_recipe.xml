@@ -9,11 +9,31 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView_food"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:background="@drawable/gradient_overlay"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/rounded_corner">
+
+
         <TextView
             android:id="@+id/textView_title"
             android:text="Dish Name"
@@ -22,19 +42,12 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:textStyle="bold"
-            android:textColor="@color/earth"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:padding="10dp"
+            android:layout_marginTop="200dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/imageView_food"
-            android:scaleType="centerCrop"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/rounded_corner"
-            android:clipToOutline="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +68,7 @@
                     android:textSize="14sp"
                     android:padding="8dp"
                     android:text="2 Persons"
-                    android:textColor="@color/brook"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -74,7 +87,7 @@
                     android:textSize="14sp"
                     android:padding="8dp"
                     android:text="Likes"
-                    android:textColor="@color/brook"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -93,10 +106,11 @@
                     android:textSize="14sp"
                     android:padding="8dp"
                     android:text="Time"
-                    android:textColor="@color/brook"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    </FrameLayout>
 </androidx.cardview.widget.CardView>
