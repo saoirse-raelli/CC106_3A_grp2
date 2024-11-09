@@ -8,6 +8,11 @@
         android:icon="@drawable/baseline_home_24"/>
 
     <item
+        android:id="@+id/recipe"
+        android:title="Find Recipes"
+        android:icon="@drawable/baseline_food_bank"/>
+
+    <item
         android:id="@+id/myplan"
         android:title="My Plan"
         android:icon="@drawable/baseline_calendar_plan"/>

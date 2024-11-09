@@ -20,16 +20,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table names
     private static final String TABLE_USERS = "Users";
     private static final String TABLE_NOTES = "Notes";
-    private static final String TABLE_RECIPE = "Recipe";
-    private static final String TABLE_CATEGORY = "Category";
-    private static final String TABLE_CALENDAR = "Calendar";
-    
 
     // Column names for Users table
     public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_USER_LASTNAME = "lastname";
     public static final String COLUMN_USER_FIRSTNAME = "firstname";
-    public static final String COLUMN_USER_EMAIL = "email";
+    public static final String COLUMN_USER_EMAIL = "email"; //remove
     public static final String COLUMN_USER_USERNAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
 
@@ -41,24 +37,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NOTE_INGREDIENTS = "ingredients";
     public static final String COLUMN_NOTE_PROCEDURES = "procedures";
 
-    //Recipe
-    public static final String COLUMN_RECIPE_ID = "recipe_id";
-
-    //Category
-    public static final String COLUMN_CATEGORY_ID = "category_id";
-    public static final String COLUMN_CATEGORY_NAME = "category_name";
-
-    //Calendar
-    public static final String COLUMN_CALENDAR_ID = "calendar_id";
-    public static final String COLUMN_CALENDAR_SELECTEDDATE = "selectedDate";
-    
-    
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
-
 
 
     @Override
@@ -85,41 +68,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_NOTE_PROCEDURES + " TEXT);";
         db.execSQL(createNotesTable);
 
-
-        String createRecipeTable = "CREATE TABLE " + TABLE_RECIPE + " ("
-        + COLUMN_RECIPE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-        + COLUMN_USER_ID + " INTEGER, "
-        + COLUMN_CATEGORY_ID + " INTEGER, "
-        + COLUMN_NOTE_ID + " INTEGER, "
-        + COLUMN_NOTE_TITLE + " TEXT, "
-        + COLUMN_NOTE_START_TIME + " TEXT, "
-        + COLUMN_NOTE_END_TIME + " TEXT, "
-        + COLUMN_NOTE_INGREDIENTS + " TEXT, "
-        + COLUMN_NOTE_PROCEDURES + " TEXT, "
-        + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "), "
-        + "FOREIGN KEY(" + COLUMN_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORY + "(" + COLUMN_CATEGORY_ID + "), "
-        + "FOREIGN KEY(" + COLUMN_NOTE_ID + ") REFERENCES " + TABLE_NOTES + "(" + COLUMN_NOTE_ID + "));";
-        db.execSQL(createRecipeTable);
-
-        String createCategoryTable = "CREATE TABLE " + TABLE_CATEGORY + " ("
-        + COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-        + COLUMN_CATEGORY_NAME + " TEXT);";
-        db.execSQL(createCategoryTable);
-
-        String createCalendarTable = "CREATE TABLE " + TABLE_CALENDAR + " ("
-        + COLUMN_CALENDAR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-        + COLUMN_USER_ID + " INTEGER, "
-        + COLUMN_RECIPE_ID + " INTEGER, "
-        + COLUMN_CALENDAR_SELECTEDDATE + " TEXT, "
-        + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "), "
-        + "FOREIGN KEY(" + COLUMN_RECIPE_ID + ") REFERENCES " + TABLE_RECIPE + "(" + COLUMN_RECIPE_ID + "));";
-        db.execSQL(createCalendarTable);
-
-
     }
 
     //METHODS FOR CREATING ACCOUNT
-
         //A.  SIGN IN
     public void addUser(String lastname, String firstname, String email, String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -154,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return exists;
     }
-
+//method ends here
 
 
 
@@ -224,4 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 }

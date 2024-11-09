@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.prepmate.databinding.ActivityMainBinding;
+import com.example.prepmate.findrecipes.FindRecipesFragment;
 import com.example.prepmate.home.HomeFragment;
 import com.example.prepmate.myplan.MyPlanFragment;
 import com.example.prepmate.profile.ProfileFragment;
@@ -59,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.profile) {
                 // Handle profile item
                 replaceFragment(new ProfileFragment());
+            } else if (itemId == R.id.recipe) {
+                // Handle profile item
+                replaceFragment(new FindRecipesFragment());
             }
 
             return true; // Return true to display the selected item as the current tab
