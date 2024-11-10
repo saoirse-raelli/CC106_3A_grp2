@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -13,10 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.prepmate.dashboard.DashboardFragment;
 import com.example.prepmate.databinding.ActivityMainBinding;
 import com.example.prepmate.findrecipes.FindRecipesFragment;
 import com.example.prepmate.home.HomeFragment;
-import com.example.prepmate.myplan.MyPlanFragment;
 import com.example.prepmate.profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.home) {
                 // Handle home item
                 replaceFragment(new HomeFragment());
-            } else if (itemId == R.id.myplan) {
-                // Handle myplan item
-                replaceFragment(new MyPlanFragment());
+            } else if (itemId == R.id.dashboard) {
+                // Handle dashboard item
+                replaceFragment(new DashboardFragment());
             } else if (itemId == R.id.profile) {
                 // Handle profile item
                 replaceFragment(new ProfileFragment());

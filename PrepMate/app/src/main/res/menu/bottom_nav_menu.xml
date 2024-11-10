@@ -13,8 +13,8 @@
         android:icon="@drawable/baseline_food_bank"/>
 
     <item
-        android:id="@+id/myplan"
-        android:title="My Plan"
+        android:id="@+id/dashboard"
+        android:title="Dashboard"
         android:icon="@drawable/baseline_calendar_plan"/>
     <item
         android:id="@+id/profile"

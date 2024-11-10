@@ -1,5 +1,9 @@
 package com.example.prepmate.profile;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.prepmate.LoginActivity;
 import com.example.prepmate.R;
 
 /**
@@ -48,6 +54,9 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
+
+    Button logout_button;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +65,36 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+//
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        logout_button = view.findViewById(R.id.logout_button);
+
+        // Set up the logout button click listener
+        logout_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Clear login state in SharedPreferences
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isLoggedIn", false); // Set the login flag to false
+                editor.apply(); // Save the changes
+
+                // Redirect to Login Activity
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+
+                // Optional: Close the parent activity if needed
+                getActivity().finish();
+            }
+        });
+
+        return view;
     }
+
+
 }
