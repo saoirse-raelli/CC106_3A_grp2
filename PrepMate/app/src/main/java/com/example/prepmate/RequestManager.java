@@ -5,9 +5,11 @@ import android.content.Context;
 import com.example.prepmate.Listeners.InstructionsListener;
 import com.example.prepmate.Listeners.RandomRecipeResponseListener;
 import com.example.prepmate.Listeners.RecipeDetailsListener;
+import com.example.prepmate.Listeners.SimilarRecipesListener;
 import com.example.prepmate.Models.InstructionsResponse;
 import com.example.prepmate.Models.RandomRecipeApiResponse;
 import com.example.prepmate.Models.RecipeDetailsResponse;
+import com.example.prepmate.Models.SimilarRecipeResponse;
 
 import java.util.List;
 
@@ -59,7 +61,7 @@ public class RequestManager {
         });
     }
 
-//Gets the information of the Title,
+    //Gets the information of the Title, source and ingredients
     public void getRecipeDetails(RecipeDetailsListener listener, int id){
         CallRecipeDetails callRecipeDetails = retrofit.create(CallRecipeDetails.class);
         Call<RecipeDetailsResponse> call = callRecipeDetails.callRecipeDetails(id, context.getString(R.string.api_key));
@@ -81,7 +83,7 @@ public class RequestManager {
         });
     }
 
-
+//Gets the information of Instructions
     public void getInstructions(InstructionsListener listener, int id){
         CallInstructions callInstructions = retrofit.create(CallInstructions.class);
         Call<List<InstructionsResponse>> call = callInstructions.callInstructions(id, context.getString(R.string.api_key));
@@ -101,7 +103,26 @@ public class RequestManager {
             }
         });
     }
+    //Gets the information of Similar Meals Suggestions
+    public void getSimilarRecipes(SimilarRecipesListener listener, int id){
+        CallSimilarRecipes callSimilarRecipes = retrofit.create(CallSimilarRecipes.class);
+        Call<List<SimilarRecipeResponse>> call = callSimilarRecipes.callSimilarRecipe(id, "4", context.getString(R.string.api_key));
+        call.enqueue(new Callback<List<SimilarRecipeResponse>>() {
+            @Override
+            public void onResponse(Call<List<SimilarRecipeResponse>> call, Response<List<SimilarRecipeResponse>> response) {
+                if (!response.isSuccessful()){
+                    listener.didError(response.message());
+                    return;
+                }
+                listener.didFetch(response.body(), response.message());
+            }
 
+            @Override
+            public void onFailure(Call<List<SimilarRecipeResponse>> call, Throwable throwable) {
+                listener.didError(throwable.getMessage());
+            }
+        });
+    }
 
     private interface CallRandomRecipes {
         // GET request to the "recipes/random" endpoint, with parameters for the API key and number of recipes
@@ -126,6 +147,15 @@ public class RequestManager {
         Call<List<InstructionsResponse>> callInstructions(
                 @Path("id") int id,
                 @Query("apiKey") String apiKey
+        );
+    }
+
+    private interface CallSimilarRecipes{
+        @GET("recipes/{id}/similar")
+        Call<List<SimilarRecipeResponse>> callSimilarRecipe(
+                @Path("id") int id,
+                @Query(("number")) String number,
+                @Query(("apiKey")) String apiKey
         );
     }
 

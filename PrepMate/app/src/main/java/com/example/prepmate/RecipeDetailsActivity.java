@@ -1,6 +1,7 @@
 package com.example.prepmate;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prepmate.Adapters.IngredientsAdapter;
 import com.example.prepmate.Adapters.InstructionsAdapter;
+import com.example.prepmate.Adapters.SimilarRecipeAdapter;
 import com.example.prepmate.Listeners.InstructionsListener;
+import com.example.prepmate.Listeners.RecipeClickListener;
 import com.example.prepmate.Listeners.RecipeDetailsListener;
+import com.example.prepmate.Listeners.SimilarRecipesListener;
 import com.example.prepmate.Models.InstructionsResponse;
 import com.example.prepmate.Models.RecipeDetailsResponse;
+import com.example.prepmate.Models.SimilarRecipeResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,6 +39,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     ProgressDialog dialog;
     IngredientsAdapter ingredientsAdapter;
     InstructionsAdapter instructionsAdapter;
+    SimilarRecipeAdapter similarRecipeAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +59,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         manager = new RequestManager(this);
         manager.getRecipeDetails(recipeDetailsListener, id);
-    //    manager.getSimilarRecipes(similarRecipesListener, id);
+        manager.getSimilarRecipes(similarRecipesListener, id);
         manager.getInstructions(instructionsListener, id);
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading Details...");
@@ -127,5 +134,32 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         }
     };
+
+
+    //SIMILAR RECIPES
+    private final SimilarRecipesListener similarRecipesListener = new SimilarRecipesListener() {
+        @Override
+        public void didFetch(List<SimilarRecipeResponse> response, String message) {
+            recycler_meal_similar.setHasFixedSize(true);
+            recycler_meal_similar.setLayoutManager(new LinearLayoutManager(RecipeDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
+            similarRecipeAdapter = new SimilarRecipeAdapter(RecipeDetailsActivity.this, response,recipeClickListener);
+            recycler_meal_similar.setAdapter(similarRecipeAdapter);
+        }
+
+        @Override
+        public void didError(String message) {
+            Toast.makeText(RecipeDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+
+        }
+    };
+
+    private final RecipeClickListener recipeClickListener = new RecipeClickListener() {
+        @Override
+        public void onRecipeClicked(String id) {
+            startActivity(new Intent(RecipeDetailsActivity.this, RecipeDetailsActivity.class)
+                    .putExtra("id", id));
+        }
+    };
+
 
 }
