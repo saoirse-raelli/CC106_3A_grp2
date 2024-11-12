@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,7 +18,6 @@ import com.example.prepmate.profile.ProfileFragment;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //METHOD FOR VIEW BINDING
+        // METHOD FOR VIEW BINDING
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
@@ -68,13 +64,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void replaceFragment(Fragment fragment){
 
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
-
     }
-
 }

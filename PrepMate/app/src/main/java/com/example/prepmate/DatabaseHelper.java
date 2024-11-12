@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_USER_LASTNAME = "lastname";
     public static final String COLUMN_USER_FIRSTNAME = "firstname";
-    public static final String COLUMN_USER_EMAIL = "email"; //remove
+//    public static final String COLUMN_USER_EMAIL = "email"; //remove
     public static final String COLUMN_USER_USERNAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
 
@@ -52,7 +52,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_USER_LASTNAME + " TEXT, "
                 + COLUMN_USER_FIRSTNAME + " TEXT, "
-                + COLUMN_USER_EMAIL + " TEXT, "
                 + COLUMN_USER_USERNAME + " TEXT UNIQUE, "
                 + COLUMN_USER_PASSWORD + " TEXT);";
         db.execSQL(createUsersTable);
@@ -72,12 +71,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //METHODS FOR CREATING ACCOUNT
         //A.  SIGN IN
-    public void addUser(String lastname, String firstname, String email, String username, String password) {
+    public void addUser(String lastname, String firstname, String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_LASTNAME, lastname);
         values.put(COLUMN_USER_FIRSTNAME, firstname);
-        values.put(COLUMN_USER_EMAIL, email);
+//        values.put(COLUMN_USER_EMAIL, email);
         values.put(COLUMN_USER_USERNAME, username);
         values.put(COLUMN_USER_PASSWORD, password);
 
