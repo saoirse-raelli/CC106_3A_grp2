@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.PrepMate" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimaryFixed">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/primaryColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+
+
+        <!-- Primary Brand Color. -->
+        <item name="colorPrimary">@color/suave</item>
+        <item name="colorPrimaryVariant">@color/beige</item>
+        <item name="colorOnPrimary">@color/nude</item>
+
+        <!-- Secondary Brand Color. -->
+        <item name="colorSecondary">@color/grey</item>
+        <item name="colorSecondaryVariant">@color/brook</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+
+    </style>
+
+    <style name="Theme.PrepMate" parent="Base.Theme.PrepMate" />
+</resources>

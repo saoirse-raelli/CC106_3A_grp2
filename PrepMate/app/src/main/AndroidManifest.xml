@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PrepMate"
+        tools:targetApi="31">
+        <activity
+            android:name=".home.snacksrecipes.UpdateSnacksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.snacksrecipes.AddSnacksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.midnightsnacksrecipes.UpdateMidnightActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.midnightsnacksrecipes.AddMidnightActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.lunchrecipes.UpdateLunchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.lunchrecipes.AddLunchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.dinnerrecipes.UpdateDinnerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.dinnerrecipes.AddDinnerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.breakfastrecipes.UpdateBreakfastActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.breakfastrecipes.AddBreakfastActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.snacksrecipes.SnacksRecipesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.midnightsnacksrecipes.MidnightRecipesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.lunchrecipes.LunchRecipesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.dinnerrecipes.DinnerRecipesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.breakfastrecipes.BreakfastRecipesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".dashboard.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.customrecipes.UpdateActivity"
+            android:exported="false"
+            android:parentActivityName=".home.customrecipes.CustomRecipesActivity" />
+        <activity
+            android:name=".home.customrecipes.AddActivity"
+            android:exported="false"
+            android:parentActivityName=".home.customrecipes.CustomRecipesActivity" />
+        <activity
+            android:name=".home.customrecipes.CustomRecipesActivity"
+            android:exported="false"
+            android:label="Recipe Library"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
