@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:title="Recipe Details"
+        app:title="Edit"
         app:titleTextColor="@color/earth"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -60,28 +60,24 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/hours_input2"
+                    <Spinner
+                        android:id="@+id/spinner_hours2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/corner_radius"
-                        android:gravity="top"
-                        android:hint="Hours: "
                         android:padding="10dp"
-                        android:textSize="16sp" />
+                        android:spinnerMode="dropdown"/>
 
-                    <EditText
-                        android:id="@+id/minutes_input2"
+                    <Spinner
+                        android:id="@+id/spinner_minutes2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="3dp"
                         android:layout_weight="1"
                         android:background="@drawable/corner_radius2"
-                        android:gravity="top"
-                        android:hint="Mins: "
                         android:padding="10dp"
-                        android:textSize="16sp" />
+                        android:spinnerMode="dropdown"/>
                 </LinearLayout>
 
                 <TextView
@@ -154,14 +150,14 @@
             android:id="@+id/update_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update" />
+            android:text="Save Changes" />
 
         <Button
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Delete" />
+            android:text="Delete"/>
 
     </LinearLayout>
 

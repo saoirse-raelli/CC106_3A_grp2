@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -19,7 +21,8 @@ import com.example.prepmate.R;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText title_input, hours_input, minutes_input, ingredients_input, procedures_input;
+    EditText title_input, ingredients_input, procedures_input;
+    Spinner hours_input, minutes_input;
     Button update_button, delete_button;
     String id, title, hours, minutes, ingredients, procedures;
 
@@ -35,17 +38,16 @@ public class UpdateActivity extends AppCompatActivity {
 
         // Enable the back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // This will show the back icon
-        getSupportActionBar().setDisplayShowHomeEnabled(true); // This ensures the icon is shown
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         title_input = findViewById(R.id.title_input2);
-        hours_input = findViewById(R.id.hours_input2);
-        minutes_input = findViewById(R.id.minutes_input2);
+        hours_input = findViewById(R.id.spinner_hours2);
+        minutes_input = findViewById(R.id.spinner_minutes2);
         ingredients_input = findViewById(R.id.ingredients_input2);
         procedures_input = findViewById(R.id.procedures_input2);
         update_button = findViewById(R.id.update_button);
         delete_button = findViewById(R.id.delete_button);
 
-        getAndSetIntentData();
 
         //Set actionbar title after getAndSetIntentData method
         ActionBar ab = getSupportActionBar();
@@ -53,13 +55,28 @@ public class UpdateActivity extends AppCompatActivity {
             ab.setTitle(title);
         }
 
+
+        // Set up the spinners for hours and minutes
+        ArrayAdapter<CharSequence> hoursAdapter = ArrayAdapter.createFromResource(
+                this, R.array.hours_array, android.R.layout.simple_spinner_item);
+        hoursAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        hours_input.setAdapter(hoursAdapter);
+
+        ArrayAdapter<CharSequence> minutesAdapter = ArrayAdapter.createFromResource(
+                this, R.array.minutes_array, android.R.layout.simple_spinner_item);
+        minutesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        minutes_input.setAdapter(minutesAdapter);
+
+        getAndSetIntentData();
+
+
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(UpdateActivity.this);
                 title = title_input.getText().toString().trim();
-                hours = hours_input.getText().toString().trim();
-                minutes = minutes_input.getText().toString().trim();
+                hours = hours_input.getSelectedItem().toString();
+                minutes = minutes_input.getSelectedItem().toString();
                 ingredients = ingredients_input.getText().toString().trim();
                 procedures = procedures_input.getText().toString().trim();
                 databaseHelper.updateData(id, title, hours, minutes, ingredients, procedures);
@@ -92,8 +109,8 @@ public class UpdateActivity extends AppCompatActivity {
 
             //Setting Intent Data
             title_input.setText(title);
-            hours_input.setText(hours);
-            minutes_input.setText(minutes);
+            hours_input.setSelection(getIndex(hours_input, hours));
+            minutes_input.setSelection(getIndex(minutes_input, minutes));
             ingredients_input.setText(ingredients);
             procedures_input.setText(procedures);
 
@@ -102,6 +119,13 @@ public class UpdateActivity extends AppCompatActivity {
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    private int getIndex(Spinner spinner, String value) {
+        ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) spinner.getAdapter();
+        return adapter.getPosition(value);
+    }
+
 
     void confirmDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

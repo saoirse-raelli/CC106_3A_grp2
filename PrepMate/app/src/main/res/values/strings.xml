@@ -10,4 +10,105 @@
         <item>dinner</item>
         <item>midnightsnacks</item>
     </string-array>
+
+    <string-array name="hours_array">
+        <item>0 hrs</item>
+        <item>1 hr</item>
+        <item>2 hrs</item>
+        <item>3 hrs</item>
+        <item>5 hrs</item>
+        <item>6 hrs</item>
+        <item>7 hrs</item>
+        <item>8 hrs</item>
+        <item>9 hrs</item>
+        <item>10 hrs</item>
+        <item>11 hrs</item>
+        <item>12 hrs</item>
+        <item>13 hrs</item>
+        <item>14 hrs</item>
+        <item>15 hrs</item>
+        <item>16 hrs</item>
+        <item>17 hrs</item>
+        <item>18 hrs</item>
+        <item>19 hrs</item>
+        <item>20 hrs</item>
+        <item>21 hrs</item>
+        <item>22 hrs</item>
+        <item>23 hrs</item>
+        <item>24 hrs</item>
+    </string-array>
+
+    <string-array name="minutes_array">
+        <item>0 mins</item>
+        <item>1 min</item>
+        <item>2 mins</item>
+        <item>3 mins</item>
+        <item>4 mins</item>
+        <item>5 mins</item>
+        <item>6 mins</item>
+        <item>7 mins</item>
+        <item>8 mins</item>
+        <item>9 mins</item>
+        <item>10 mins</item>
+        <item>11 mins</item>
+        <item>12 mins</item>
+        <item>13 mins</item>
+        <item>14 mins</item>
+        <item>15 mins</item>
+        <item>16 mins</item>
+        <item>17 mins</item>
+        <item>18 mins</item>
+        <item>19 mins</item>
+        <item>20 mins</item>
+        <item>21 mins</item>
+        <item>22 mins</item>
+        <item>23 mins</item>
+        <item>24 mins</item>
+        <item>25 mins</item>
+        <item>26 mins</item>
+        <item>27 mins</item>
+        <item>28 mins</item>
+        <item>29 mins</item>
+        <item>30 mins</item>
+        <item>31 mins</item>
+        <item>32 mins</item>
+        <item>33 mins</item>
+        <item>34 mins</item>
+        <item>35 mins</item>
+        <item>36 mins</item>
+        <item>37 mins</item>
+        <item>38 mins</item>
+        <item>39 mins</item>
+        <item>40 mins</item>
+        <item>31 mins</item>
+        <item>32 mins</item>
+        <item>33 mins</item>
+        <item>34 mins</item>
+        <item>35 mins</item>
+        <item>36 mins</item>
+        <item>37 mins</item>
+        <item>38 mins</item>
+        <item>39 mins</item>
+        <item>40 mins</item>
+        <item>41 mins</item>
+        <item>42 mins</item>
+        <item>43 mins</item>
+        <item>44 mins</item>
+        <item>45 mins</item>
+        <item>46 mins</item>
+        <item>47 mins</item>
+        <item>48 mins</item>
+        <item>49 mins</item>
+        <item>50 mins</item>
+        <item>51 mins</item>
+        <item>52 mins</item>
+        <item>53 mins</item>
+        <item>54 mins</item>
+        <item>55 mins</item>
+        <item>56 mins</item>
+        <item>57 mins</item>
+        <item>58 mins</item>
+        <item>59 mins</item>
+    </string-array>
+
 </resources>

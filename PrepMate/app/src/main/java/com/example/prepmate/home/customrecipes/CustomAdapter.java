@@ -62,8 +62,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             intent.putExtra("title", noteTitle.get(position));
             intent.putExtra("hours", hours.get(position));
             intent.putExtra("minutes", minutes.get(position));
-            intent.putExtra("ingredients", ingredients.get(position));  // Ingredients data
-            intent.putExtra("procedures", procedures.get(position));    // Procedures data
+            intent.putExtra("ingredients", ingredients.get(position));
+            intent.putExtra("procedures", procedures.get(position));
 
             // Start UpdateActivity
             activity.startActivityForResult(intent, 1);

@@ -33,7 +33,7 @@ public class CustomRecipesActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         // Set up the Toolbar
-        Toolbar toolbar = findViewById(R.id.custom_recipes_toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable the back icon
 
