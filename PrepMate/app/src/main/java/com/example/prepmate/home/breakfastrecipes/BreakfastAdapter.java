@@ -39,7 +39,7 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.breakfast_row, parent, false);
+        View view = inflater.inflate(R.layout.my_row, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -50,7 +50,7 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.MyVi
         holder.minutes_txt.setText(minutes.get(position));
 
         // OnClickListener to open UpdateActivity with all data
-        holder.breakfastLayout.setOnClickListener(view -> {
+        holder.mainLayout.setOnClickListener(view -> {
             Intent intent = new Intent(context, UpdateBreakfastActivity.class);
             intent.putExtra("id", newBreakfastId.get(position));
             intent.putExtra("title", breakfastTitle.get(position));
@@ -71,7 +71,7 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView breakfastTitle_txt, hours_txt, minutes_txt;
-        View breakfastLayout;
+        View mainLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,7 +80,7 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.MyVi
             breakfastTitle_txt = itemView.findViewById(R.id.title);
             hours_txt = itemView.findViewById(R.id.hours);
             minutes_txt = itemView.findViewById(R.id.minutes);
-            breakfastLayout = itemView.findViewById(R.id.breakfastLayout);
+            mainLayout = itemView.findViewById(R.id.mainLayout);
         }
     }
 }

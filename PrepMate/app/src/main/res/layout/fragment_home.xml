@@ -6,85 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".home.HomeFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="right"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Notify Button -->
+        <ImageButton
+            android:id="@+id/btnNotify"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:rotation="25"
+            android:src="@drawable/ic_notif"
+            android:contentDescription="Notifications"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Create Plan Text -->
         <TextView
+            android:id="@+id/createPlanText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
             android:text="Create Plan"
-            android:textColor="#3D211A"
-            android:textSize="28dp"
-            android:textStyle="bold"/>
+            android:textColor="@color/suave"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/btnNotify"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
+        <!-- Create Plan Button -->
         <ImageButton
             android:id="@+id/btnNotifications"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="25dp"
             android:src="@drawable/baseline_add_circle_24"
             android:contentDescription="Create Plan"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintStart_toEndOf="@id/createPlanText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="95dp"
         android:layout_marginBottom="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                android:layout_margin="8dp"
-                android:backgroundTint="#CECACA"
-                android:layout_gravity="center">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Status:"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:textColor="#2A1E1E"
-                        android:layout_gravity="left" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="You did not set your meal plan"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:textStyle="italic"
-                        android:textColor="#2A1E1E"
-                        android:layout_gravity="center" />
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
 
             <LinearLayout
                 android:id="@+id/btnContainer"
@@ -100,49 +85,70 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ImageButton
-                        android:id="@+id/btnBreakfast"
-                        android:layout_width="180dp"
-                        android:layout_height="187dp"
-                        android:background="@drawable/rounded_corner"
-                        android:clipToOutline="true"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/img_breakfast" />
+                    <FrameLayout
+                        android:layout_width="170dp"
+                        android:layout_height="197dp"
+                        android:layout_gravity="center">
 
-                    <TextView
-                        android:id="@+id/textBreakfast"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Breakfast"
-                        android:textSize="20sp"
-                        android:textColor="@color/black" />
+                        <ImageButton
+                            android:id="@+id/btnBreakfast"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/shadow_background"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/img_breakfast" />
+
+                        <TextView
+                            android:id="@+id/textBreakfast"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="Breakfast"
+                            android:textSize="20sp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/earth"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/btnLunchContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
-                    <ImageButton
-                        android:id="@+id/btnLunch"
-                        android:layout_width="180dp"
-                        android:layout_height="187dp"
-                        android:background="@drawable/rounded_corner"
-                        android:clipToOutline="true"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/img_lunch" />
+                    <FrameLayout
+                        android:layout_width="170dp"
+                        android:layout_height="197dp"
+                        android:layout_gravity="center">
 
-                    <TextView
-                        android:id="@+id/textLunch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Lunch"
-                        android:textSize="20sp"
-                        android:textColor="@color/black" />
+                        <ImageButton
+                            android:id="@+id/btnLunch"
+                            android:layout_width="170dp"
+                            android:layout_height="197dp"
+                            android:background="@drawable/shadow_background"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/img_lunch" />
+
+                        <TextView
+                            android:id="@+id/textLunch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="Lunch"
+                            android:textSize="20sp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/earth"
+                            android:textStyle="bold"/>
+
+                    </FrameLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -160,49 +166,70 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ImageButton
-                        android:id="@+id/btnSnack"
-                        android:layout_width="180dp"
-                        android:layout_height="187dp"
-                        android:background="@drawable/rounded_corner"
-                        android:clipToOutline="true"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/img_snack" />
+                    <FrameLayout
+                        android:layout_width="170dp"
+                        android:layout_height="197dp"
+                        android:layout_gravity="center">
 
-                    <TextView
-                        android:id="@+id/textSnack"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Snack"
-                        android:textSize="20sp"
-                        android:textColor="@color/black" />
+                        <ImageButton
+                            android:id="@+id/btnSnack"
+                            android:layout_width="170dp"
+                            android:layout_height="197dp"
+                            android:background="@drawable/shadow_background"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/img_snack" />
+
+                        <TextView
+                            android:id="@+id/textSnack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="Snack"
+                            android:textSize="20sp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+                    </FrameLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/btnDinnerContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
-                    <ImageButton
-                        android:id="@+id/btnDinner"
-                        android:layout_width="180dp"
-                        android:layout_height="187dp"
-                        android:background="@drawable/rounded_corner"
-                        android:clipToOutline="true"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/img_dinner" />
+                    <FrameLayout
+                        android:layout_width="170dp"
+                        android:layout_height="197dp"
+                        android:layout_gravity="center">
+                        <ImageButton
+                            android:id="@+id/btnDinner"
+                            android:layout_width="170dp"
+                            android:layout_height="197dp"
+                            android:background="@drawable/shadow_background"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/img_dinner" />
 
-                    <TextView
-                        android:id="@+id/textDinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Dinner"
-                        android:textSize="20sp"
-                        android:textColor="@color/black" />
+                        <TextView
+                            android:id="@+id/textDinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="Dinner"
+                            android:textSize="20sp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+                    </FrameLayout>
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -219,50 +246,68 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+                    <FrameLayout
+                        android:layout_width="170dp"
+                        android:layout_height="197dp"
+                        android:layout_gravity="center">
 
-                    <ImageButton
-                        android:id="@+id/btnMidSnack"
-                        android:layout_width="180dp"
-                        android:layout_height="187dp"
-                        android:background="@drawable/rounded_corner"
-                        android:clipToOutline="true"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/img_mid_snack" />
+                        <ImageButton
+                            android:id="@+id/btnMidSnack"
+                            android:layout_width="170dp"
+                            android:layout_height="197dp"
+                            android:background="@drawable/shadow_background"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/img_mid_snack" />
 
-                    <TextView
-                        android:id="@+id/textMidSnack"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Midnight Snack"
-                        android:textSize="20sp"
-                        android:textColor="@color/black" />
+                        <TextView
+                            android:id="@+id/textMidSnack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="Midnight Snack"
+                            android:textSize="20sp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/btnCustomContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
+                    <FrameLayout
+                        android:layout_width="170dp"
+                        android:layout_height="197dp"
+                        android:layout_gravity="center">
 
-                    <ImageButton
-                        android:id="@+id/btnCustom"
-                        android:layout_width="180dp"
-                        android:layout_height="187dp"
-                        android:background="@drawable/rounded_corner"
-                        android:clipToOutline="true"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/img_breakfast" />
+                        <ImageButton
+                            android:id="@+id/btnCustom"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/shadow_background"
+                            android:clipToOutline="true"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/img_custom" />
 
-                    <TextView
-                        android:id="@+id/textCustom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Custom Recipes"
-                        android:textSize="20sp"
-                        android:textColor="@color/black" />
+                        <TextView
+                            android:id="@+id/textCustom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:text="Custom Recipes"
+                            android:textSize="20sp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+                    </FrameLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
