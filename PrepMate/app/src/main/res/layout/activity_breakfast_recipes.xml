@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:title="Recipe Library"
+        app:title=" Breakfast Recipe Library"
         app:titleTextColor="@color/earth"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"

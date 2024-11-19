@@ -43,8 +43,8 @@ public class CustomRecipesActivity extends AppCompatActivity {
         noteTitle = new ArrayList<>();
         hours = new ArrayList<>();
         minutes = new ArrayList<>();
-        ingredients = new ArrayList<>();  // Initialize ingredients list
-        procedures = new ArrayList<>();   // Initialize procedures list
+        ingredients = new ArrayList<>();
+        procedures = new ArrayList<>();
 
         storeDataInArrays();
 

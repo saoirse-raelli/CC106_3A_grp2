@@ -9,13 +9,17 @@ import android.widget.Toast;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database and table information
     private final Context context;
     private static final String DATABASE_NAME = "PrepMate.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     // Table names
     private static final String TABLE_USERS = "Users";
@@ -109,7 +113,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_NOTE_HOURS + " TEXT, "
                 + COLUMN_NOTE_MINUTES + " TEXT, "
                 + COLUMN_NOTE_INGREDIENTS + " TEXT, "
-                + COLUMN_NOTE_PROCEDURES + " TEXT);";
+                + COLUMN_NOTE_PROCEDURES + " TEXT, "
+                + "category TEXT DEFAULT 'Customized');"; // Adding the new category column with a default value
         db.execSQL(createNotesTable);
 
         //2. Create Breakfast table
@@ -119,7 +124,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_BREAKFAST_HOURS + " TEXT, "
                 + COLUMN_BREAKFAST_MINUTES + " TEXT, "
                 + COLUMN_BREAKFAST_INGREDIENTS + " TEXT, "
-                + COLUMN_BREAKFAST_PROCEDURES + " TEXT);";
+                + COLUMN_BREAKFAST_PROCEDURES + " TEXT, "
+                + "category TEXT DEFAULT 'Breakfast');";
         db.execSQL(createBreakfastTable);
 
         //3. Create Lunch table
@@ -129,7 +135,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_LUNCH_HOURS + " TEXT, "
                 + COLUMN_LUNCH_MINUTES + " TEXT, "
                 + COLUMN_LUNCH_INGREDIENTS + " TEXT, "
-                + COLUMN_LUNCH_PROCEDURES + " TEXT);";
+                + COLUMN_LUNCH_PROCEDURES + " TEXT, "
+                + "category TEXT DEFAULT 'Lunch');";
         db.execSQL(createLunchTable);
 
         //4. Create Dinner table
@@ -139,7 +146,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DINNER_HOURS + " TEXT, "
                 + COLUMN_DINNER_MINUTES + " TEXT, "
                 + COLUMN_DINNER_INGREDIENTS + " TEXT, "
-                + COLUMN_DINNER_PROCEDURES + " TEXT);";
+                + COLUMN_DINNER_PROCEDURES + " TEXT, "
+                + "category TEXT DEFAULT 'Dinner');";
         db.execSQL(createDinnerTable);
 
         //5. Create Snacks table
@@ -149,7 +157,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_SNACKS_HOURS + " TEXT, "
                 + COLUMN_SNACKS_MINUTES + " TEXT, "
                 + COLUMN_SNACKS_INGREDIENTS + " TEXT, "
-                + COLUMN_SNACKS_PROCEDURES + " TEXT);";
+                + COLUMN_SNACKS_PROCEDURES + " TEXT, "
+                + "category TEXT DEFAULT 'Snacks');";
         db.execSQL(createSnacksTable);
 
         //6. Create Midnight Snacks table
@@ -159,7 +168,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_MIDNIGHT_SNACKS_HOURS + " TEXT, "
                 + COLUMN_MIDNIGHT_SNACKS_MINUTES + " TEXT, "
                 + COLUMN_MIDNIGHT_SNACKS_INGREDIENTS + " TEXT, "
-                + COLUMN_MIDNIGHT_SNACKS_PROCEDURES + " TEXT);";
+                + COLUMN_MIDNIGHT_SNACKS_PROCEDURES + " TEXT, "
+                + "category TEXT DEFAULT 'Midnight Snacks');";
         db.execSQL(createMidnightSnacksTable);
 
 
@@ -207,16 +217,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //METHODS FOR RECIPES
     //1
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop the old table if it exists and create a new one
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);   //THIS ONE IS TATANGGALIN NA PAG OKAY NA YUNG IBAAA
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BREAKFAST);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LUNCH);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DINNER);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SNACKS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MIDNIGHT_SNACKS);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);   //old version
 
-        onCreate(db);
+        if (oldVersion < 2) {  // Check if the version is less than 2 (to handle migration)
+            // Add the category column to each table if it does not already exist
+            db.execSQL("ALTER TABLE " + TABLE_NOTES + " ADD COLUMN category TEXT DEFAULT 'Customized';");
+            db.execSQL("ALTER TABLE " + TABLE_BREAKFAST + " ADD COLUMN category TEXT DEFAULT 'Breakfast';");
+            db.execSQL("ALTER TABLE " + TABLE_LUNCH + " ADD COLUMN category TEXT DEFAULT 'Lunch';");
+            db.execSQL("ALTER TABLE " + TABLE_DINNER + " ADD COLUMN category TEXT DEFAULT 'Dinner';");
+            db.execSQL("ALTER TABLE " + TABLE_SNACKS + " ADD COLUMN category TEXT DEFAULT 'Snacks';");
+            db.execSQL("ALTER TABLE " + TABLE_MIDNIGHT_SNACKS + " ADD COLUMN category TEXT DEFAULT 'Midnight Snacks';");
+        }
+
+        //onCreate(db);
     }
 
 
@@ -230,7 +245,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_NOTE_HOURS, hours);
         values.put(COLUMN_NOTE_MINUTES, minutes);
         values.put(COLUMN_NOTE_INGREDIENTS, ingredients);
-        values.put(COLUMN_NOTE_PROCEDURES, procedures);
+        values.put("category", "Customized");
 
         long result = db.insert(TABLE_NOTES, null, values);
         if(result == -1){
@@ -252,6 +267,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COLUMN_BREAKFAST_MINUTES, minutes);
             values.put(COLUMN_BREAKFAST_INGREDIENTS, ingredients);
             values.put(COLUMN_BREAKFAST_PROCEDURES, procedures);
+            values.put("category", "Breakfast");
 
         long result = db.insert(TABLE_BREAKFAST, null, values);
             if(result == -1){
@@ -271,6 +287,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_LUNCH_MINUTES, minutes);
         values.put(COLUMN_LUNCH_INGREDIENTS, ingredients);
         values.put(COLUMN_LUNCH_PROCEDURES, procedures);
+        values.put("category", "Lunch");
 
         long result = db.insert(TABLE_LUNCH, null, values);
         if(result == -1){
@@ -291,6 +308,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DINNER_MINUTES, minutes);
         values.put(COLUMN_DINNER_INGREDIENTS, ingredients);
         values.put(COLUMN_DINNER_PROCEDURES, procedures);
+        values.put("category", "Dinner");
 
         long result = db.insert(TABLE_DINNER, null, values);
         if(result == -1){
@@ -311,6 +329,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SNACKS_MINUTES, minutes);
         values.put(COLUMN_SNACKS_INGREDIENTS, ingredients);
         values.put(COLUMN_SNACKS_PROCEDURES, procedures);
+        values.put("category", "Snacks");
 
         long result = db.insert(TABLE_SNACKS, null, values);
         if(result == -1){
@@ -331,6 +350,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_MIDNIGHT_SNACKS_MINUTES, minutes);
         values.put(COLUMN_MIDNIGHT_SNACKS_INGREDIENTS, ingredients);
         values.put(COLUMN_MIDNIGHT_SNACKS_PROCEDURES, procedures);
+        values.put("category", "Midnight Snacks");
 
         long result = db.insert(TABLE_MIDNIGHT_SNACKS, null, values);
         if(result == -1){
@@ -598,5 +618,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+
+
+
+//di ko pa natatry: METHOD TO fetch recipes from all category tables and store them in a list
+
+    public List<Recipe> getAllRecipes() {
+        List<Recipe> recipes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Query for each category
+        Cursor breakfastCursor = db.rawQuery("SELECT title, hours, minutes FROM Breakfast", null);
+        addRecipesToList(recipes, breakfastCursor, "Breakfast");
+
+        Cursor lunchCursor = db.rawQuery("SELECT title, hours, minutes FROM Lunch", null);
+        addRecipesToList(recipes, lunchCursor, "Lunch");
+
+        Cursor dinnerCursor = db.rawQuery("SELECT title, hours, minutes FROM Dinner", null);
+        addRecipesToList(recipes, dinnerCursor, "Dinner");
+
+        Cursor snacksCursor = db.rawQuery("SELECT title, hours, minutes FROM Snacks", null);
+        addRecipesToList(recipes, snacksCursor, "Snacks");
+
+        Cursor midnightSnacksCursor = db.rawQuery("SELECT title, hours, minutes FROM MidnightSnacks", null);
+        addRecipesToList(recipes, midnightSnacksCursor, "Midnight Snacks");
+
+        return recipes;
+    }
+
+    private void addRecipesToList(List<Recipe> recipes, Cursor cursor, String category) {
+        if (cursor.moveToFirst()) {
+            do {
+                String title = cursor.getString(0);
+                String hours = cursor.getString(1);
+                String minutes = cursor.getString(2);
+                recipes.add(new Recipe(title, hours, minutes, category));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+    }
+
+
+
+
+//METHOD TO GET DETAILS FROM RANDOM RECIPE SUGGESTIONS
 
 }

@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/midnight_recipes_toolbar"
-        app:title="Recipe Library"
+        app:title="Midnight Snacks Recipe Library"
         app:titleTextColor="@color/earth"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
