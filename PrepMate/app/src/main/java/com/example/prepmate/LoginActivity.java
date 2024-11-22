@@ -10,9 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,8 +40,6 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-
-
         //LOGIN BUTTON
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,11 +51,18 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                // Check user credentials
                 if (databaseHelper.checkUser(username, password)) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                    // Save login state and username
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("isLoggedIn", true);
+                    editor.putString("username", username); // Save the username
                     editor.apply();
+
+                    Log.d("LoginActivity", "User logged in: " + username); // Log the username
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

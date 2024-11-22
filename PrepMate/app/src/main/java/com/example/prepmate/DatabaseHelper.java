@@ -662,6 +662,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    // Method to get user details by username
+    public Cursor getUserDetails(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_USERS,
+                new String[]{COLUMN_USER_USERNAME, COLUMN_USER_FIRSTNAME, COLUMN_USER_LASTNAME},
+                COLUMN_USER_USERNAME + "=?",
+                new String[]{username},
+                null, null, null);
+    }
+
+
 
 
 //METHOD TO GET DETAILS FROM RANDOM RECIPE SUGGESTIONS
