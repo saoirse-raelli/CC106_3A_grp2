@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/mainLayout"
-    android:padding="16dp">
+    android:id="@+id/mainLayout">
 
     <!-- CardView for meal item -->
     <androidx.cardview.widget.CardView
@@ -35,8 +34,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="16dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,11 +50,23 @@
                     android:text="0"/>
 
                 <TextView
+                    android:layout_marginStart="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hours"/>
+
+                <TextView
                     android:id="@+id/minutes"
                     android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"/>
+
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mins"/>
 
             </LinearLayout>
 
@@ -87,7 +97,7 @@
                 android:id="@+id/addMealButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Recipe"
+                android:text="Add to Schedule"
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center"/>
 
