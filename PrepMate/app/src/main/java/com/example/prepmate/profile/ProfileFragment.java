@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.example.prepmate.DatabaseHelper;
 import com.example.prepmate.LoginActivity;
 import com.example.prepmate.R;
@@ -40,14 +41,12 @@ public class ProfileFragment extends Fragment {
         // Initialize the database helper
         databaseHelper = new DatabaseHelper(getContext());
 
-        // Set background and text colors based on the current theme
-        // applyTheme(view); // Dark mode functionality removed for now
+        // Retrieve logged-in user ID from SharedPreferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("user_id", -1); // Get the user_id, default is -1 if not logged in
 
-        // Retrieve and display user details
-        String username = getActivity().getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
-                .getString("username", null);
-        if (username != null) {
-            displayUserDetails(username);
+        if (userId != -1) {
+            displayUserDetails(userId); // Fetch and display user details using the user_id
         } else {
             nameTextView.setText("User Not Found");
             firstNameTextView.setText("");
@@ -60,40 +59,19 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    // Removed the applyTheme method for dark mode as it's not needed now
-    /*
-    private void applyTheme(View view) {
-        // Set background and text colors based on the theme
-        if ((getResources().getConfiguration().uiMode &
-                android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
-                android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-            // Dark mode settings
-            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.darkBackground));
-            nameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.darkText));
-            firstNameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.darkText));
-            lastNameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.darkText));
-        } else {
-            // Light mode settings
-            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightBackground));
-            nameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.lightText));
-            firstNameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.lightText));
-            lastNameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.lightText));
-        }
-    }
-    */
-
-    private void displayUserDetails(String username) {
-        Cursor cursor = databaseHelper.getUserDetails(username);
+    private void displayUserDetails(int userId) {
+        // Fetch user details from the database using user_id
+        Cursor cursor = databaseHelper.getUserDetailsById(userId);  // Updated method to get user details by user_id
         if (cursor != null && cursor.moveToFirst()) {
             Log.d("ProfileFragment", "Column Count: " + cursor.getColumnCount());
 
             try {
-                String userName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_USERNAME));
                 String firstName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_FIRSTNAME));
                 String lastName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_LASTNAME));
+                String username = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_USERNAME));
 
                 // Set user details to TextViews
-                nameTextView.setText(userName);
+                nameTextView.setText(username);
                 firstNameTextView.setText("First Name: " + firstName);
                 lastNameTextView.setText("Last Name: " + lastName);
             } catch (Exception e) {
@@ -117,7 +95,7 @@ public class ProfileFragment extends Fragment {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("isLoggedIn", false); // Set the login flag to false
-                    editor.remove("username"); // Optionally remove username
+                    editor.remove("user_id"); // Remove user_id as well
                     editor.apply(); // Save the changes
 
                     // Redirect to Login Activity

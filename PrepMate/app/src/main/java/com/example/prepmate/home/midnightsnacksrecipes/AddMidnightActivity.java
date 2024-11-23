@@ -1,6 +1,7 @@
 package com.example.prepmate.home.midnightsnacksrecipes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,6 +64,9 @@ public class AddMidnightActivity extends AppCompatActivity {
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                int userId = getLoggedInUserId();
+
                 DatabaseHelper databaseHelper = new DatabaseHelper(AddMidnightActivity.this);
 
                 String hours = hours_input.getSelectedItem().toString();
@@ -74,7 +78,8 @@ public class AddMidnightActivity extends AppCompatActivity {
                         hours,
                         minutes,
                         ingredients_input.getText().toString().trim(),
-                        procedures_input.getText().toString().trim()
+                        procedures_input.getText().toString().trim(),
+                        userId // Pass the user_id of the logged-in user
                 );
 
                 Intent resultIntent = new Intent();
@@ -92,6 +97,11 @@ public class AddMidnightActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-
+    }
+    // Method to get the logged-in user's ID (You should implement this based on your login system)
+    private int getLoggedInUserId() {
+        // Example logic for retrieving the user_id from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("user_id", -1); // Return the user_id stored during login, or -1 if not logged in
     }
 }

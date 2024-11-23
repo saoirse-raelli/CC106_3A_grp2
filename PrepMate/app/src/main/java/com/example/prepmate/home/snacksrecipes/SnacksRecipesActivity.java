@@ -1,6 +1,7 @@
 package com.example.prepmate.home.snacksrecipes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -96,7 +97,14 @@ public class SnacksRecipesActivity extends AppCompatActivity {
         ingredients.clear();
         procedures.clear();
 
-        Cursor cursor = databaseHelper.readAllSnacksRecipes();
+        // Get the user_id of the logged-in user
+        int userId = getLoggedInUserId();
+        if (userId == -1) {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+            return; // Exit the method if no user is logged in
+        }
+
+        Cursor cursor = databaseHelper.readAllSnacksRecipes(userId);
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "No Data.", Toast.LENGTH_SHORT).show();
         } else {
@@ -118,6 +126,12 @@ public class SnacksRecipesActivity extends AppCompatActivity {
             storeDataInArrays();
             snacksAdapter.notifyDataSetChanged();
         }
+    }
+
+    // Method to get the logged-in user's ID (You should implement this based on your login system)
+    private int getLoggedInUserId() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("user_id", -1); // Return the user_id stored during login, or -1 if not logged in
     }
 
 }

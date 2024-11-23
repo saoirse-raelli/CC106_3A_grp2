@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PrepMate"
         tools:targetApi="31">
+
         <activity
-            android:name=".RecipeDetailsActivity"
+            android:name=".RecipeDetailActivity"
             android:exported="false" />
         <activity
             android:name=".home.snacksrecipes.UpdateSnacksActivity"
@@ -75,19 +76,6 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".home.customrecipes.UpdateActivity"
-            android:exported="false"
-            android:parentActivityName=".home.customrecipes.CustomRecipesActivity" />
-        <activity
-            android:name=".home.customrecipes.AddActivity"
-            android:exported="false"
-            android:parentActivityName=".home.customrecipes.CustomRecipesActivity" />
-        <activity
-            android:name=".home.customrecipes.CustomRecipesActivity"
-            android:exported="false"
-            android:label="Recipe Library"
-            android:parentActivityName=".MainActivity" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -97,6 +85,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".calendar.breakfastcalendar.BreakfastCalendarActivity" />
+        <activity android:name=".calendar.lunchcalendar.LunchCalendarActivity" />
+        <activity android:name=".calendar.snackscalendar.SnacksCalendarActivity" />
+        <activity android:name=".calendar.dinnercalendar.DinnerCalendarActivity" />
+        <activity android:name=".calendar.midnightsnackscalendar.MidnightSnacksCalendarActivity" />
+        <activity android:name=".calendar.CalendarActivity"></activity>
     </application>
 
 </manifest>

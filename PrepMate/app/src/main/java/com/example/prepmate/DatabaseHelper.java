@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -29,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_DINNER = "Dinner";
     private static final String TABLE_SNACKS = "Snacks";
     private static final String TABLE_MIDNIGHT_SNACKS = "MidnightSnacks";
+    public static final String TABLE_CALENDAR = "Calendar";
 
     // Column names for Users table
     public static final String COLUMN_USER_ID = "user_id";
@@ -36,14 +36,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_FIRSTNAME = "firstname";
     public static final String COLUMN_USER_USERNAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
-
-    // Column names for Notes table.... dedelete to soon
-    public static final String COLUMN_NOTE_ID = "note_id";
-    public static final String COLUMN_NOTE_TITLE = "title";
-    public static final String COLUMN_NOTE_HOURS = "hours";
-    public static final String COLUMN_NOTE_MINUTES = "minutes";
-    public static final String COLUMN_NOTE_INGREDIENTS = "ingredients";
-    public static final String COLUMN_NOTE_PROCEDURES = "procedures";
 
     // Column names for Breakfast table
     public static final String COLUMN_BREAKFAST_ID = "breakfast_id";
@@ -86,6 +78,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_MIDNIGHT_SNACKS_INGREDIENTS = "ingredients";
     public static final String COLUMN_MIDNIGHT_SNACKS_PROCEDURES = "procedures";
 
+    // Column names for Calendar table
+    public static final String COLUMN_CALENDAR_ID = "id";
+    public static final String COLUMN_CALENDAR_SELECTED_DATE = "selected_date";
+
+
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -95,6 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
 
         //1.  Create Users table
         String createUsersTable = "CREATE TABLE " + TABLE_USERS + " ("
@@ -106,17 +104,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createUsersTable);
 
 
-        //2. Create Notes table
-        String createNotesTable = "CREATE TABLE " + TABLE_NOTES + " ("
-                + COLUMN_NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_NOTE_TITLE + " TEXT, "
-                + COLUMN_NOTE_HOURS + " TEXT, "
-                + COLUMN_NOTE_MINUTES + " TEXT, "
-                + COLUMN_NOTE_INGREDIENTS + " TEXT, "
-                + COLUMN_NOTE_PROCEDURES + " TEXT, "
-                + "category TEXT DEFAULT 'Customized');"; // Adding the new category column with a default value
-        db.execSQL(createNotesTable);
-
         //2. Create Breakfast table
         String createBreakfastTable = "CREATE TABLE " + TABLE_BREAKFAST + " ("
                 + COLUMN_BREAKFAST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -125,7 +112,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_BREAKFAST_MINUTES + " TEXT, "
                 + COLUMN_BREAKFAST_INGREDIENTS + " TEXT, "
                 + COLUMN_BREAKFAST_PROCEDURES + " TEXT, "
-                + "category TEXT DEFAULT 'Breakfast');";
+                + "category TEXT DEFAULT 'Breakfast', "
+                + "user_id INTEGER);";
         db.execSQL(createBreakfastTable);
 
         //3. Create Lunch table
@@ -136,7 +124,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_LUNCH_MINUTES + " TEXT, "
                 + COLUMN_LUNCH_INGREDIENTS + " TEXT, "
                 + COLUMN_LUNCH_PROCEDURES + " TEXT, "
-                + "category TEXT DEFAULT 'Lunch');";
+                + "category TEXT DEFAULT 'Lunch', "
+                + "user_id INTEGER);";
         db.execSQL(createLunchTable);
 
         //4. Create Dinner table
@@ -147,7 +136,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DINNER_MINUTES + " TEXT, "
                 + COLUMN_DINNER_INGREDIENTS + " TEXT, "
                 + COLUMN_DINNER_PROCEDURES + " TEXT, "
-                + "category TEXT DEFAULT 'Dinner');";
+                + "category TEXT DEFAULT 'Dinner', "
+                + "user_id INTEGER);";
         db.execSQL(createDinnerTable);
 
         //5. Create Snacks table
@@ -158,7 +148,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_SNACKS_MINUTES + " TEXT, "
                 + COLUMN_SNACKS_INGREDIENTS + " TEXT, "
                 + COLUMN_SNACKS_PROCEDURES + " TEXT, "
-                + "category TEXT DEFAULT 'Snacks');";
+                + "category TEXT DEFAULT 'Snacks', "
+                + "user_id INTEGER);";
         db.execSQL(createSnacksTable);
 
         //6. Create Midnight Snacks table
@@ -169,10 +160,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_MIDNIGHT_SNACKS_MINUTES + " TEXT, "
                 + COLUMN_MIDNIGHT_SNACKS_INGREDIENTS + " TEXT, "
                 + COLUMN_MIDNIGHT_SNACKS_PROCEDURES + " TEXT, "
-                + "category TEXT DEFAULT 'Midnight Snacks');";
+                + "category TEXT DEFAULT 'Midnight Snacks', "
+                + "user_id INTEGER);";
         db.execSQL(createMidnightSnacksTable);
 
-
+        // Create Calendar table
+        String createCalendarTable = "CREATE TABLE " + TABLE_CALENDAR + " ("
+                + COLUMN_CALENDAR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_CALENDAR_SELECTED_DATE + " TEXT NOT NULL, "
+                + "user_id INTEGER, "
+                + "breakfast_id INTEGER, "
+                + "lunch_id INTEGER, "
+                + "snacks_id INTEGER, "
+                + "dinner_id INTEGER, "
+                + "midnightsnacks_id INTEGER, "
+                + "FOREIGN KEY (breakfast_id) REFERENCES " + TABLE_BREAKFAST + "(" + COLUMN_BREAKFAST_ID + "), "
+                + "FOREIGN KEY (lunch_id) REFERENCES " + TABLE_LUNCH + "(" + COLUMN_LUNCH_ID + "), "
+                + "FOREIGN KEY (snacks_id) REFERENCES " + TABLE_SNACKS + "(" + COLUMN_SNACKS_ID + "), "
+                + "FOREIGN KEY (dinner_id) REFERENCES " + TABLE_DINNER + "(" + COLUMN_DINNER_ID + "), "
+                + "FOREIGN KEY (midnightsnacks_id) REFERENCES " + TABLE_MIDNIGHT_SNACKS + "(" + COLUMN_MIDNIGHT_SNACKS_ID + "));";
+        db.execSQL(createCalendarTable);
 
     }
 
@@ -210,6 +217,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return exists;
     }
+
+    // Method to retrieve user_id based on username and password
+        //C. GET USER ID
+    public int getUserId(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int userId = -1; // Default value if not found
+
+        // Query to fetch the user_id
+        Cursor cursor = db.rawQuery(
+                "SELECT user_id FROM " + TABLE_USERS + " WHERE " + COLUMN_USER_USERNAME + " = ? AND "
+                        + COLUMN_USER_PASSWORD + " = ?",
+                new String[]{username, password}
+        );
+
+        if (cursor.moveToFirst()) {
+            userId = cursor.getInt(0); // Get the user_id from the first column
+        }
+
+        cursor.close();
+        db.close();
+        return userId;
+    }
+
 //method ends here
 
 
@@ -218,67 +248,77 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //1
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop the old table if it exists and create a new one
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);   //old version
-
-        if (oldVersion < 2) {  // Check if the version is less than 2 (to handle migration)
-            // Add the category column to each table if it does not already exist
+        if (oldVersion < 5) { // Assume version 4 introduces the category and user_id columns
+            // Add category and user_id to Notes table
             db.execSQL("ALTER TABLE " + TABLE_NOTES + " ADD COLUMN category TEXT DEFAULT 'Customized';");
+            db.execSQL("ALTER TABLE " + TABLE_NOTES + " ADD COLUMN user_id INTEGER;");
+
+            // Add category and user_id to Breakfast table
             db.execSQL("ALTER TABLE " + TABLE_BREAKFAST + " ADD COLUMN category TEXT DEFAULT 'Breakfast';");
+            db.execSQL("ALTER TABLE " + TABLE_BREAKFAST + " ADD COLUMN user_id INTEGER;");
+
+            // Repeat for other tables (Lunch, Dinner, Snacks, Midnight Snacks)
             db.execSQL("ALTER TABLE " + TABLE_LUNCH + " ADD COLUMN category TEXT DEFAULT 'Lunch';");
+            db.execSQL("ALTER TABLE " + TABLE_LUNCH + " ADD COLUMN user_id INTEGER;");
+
             db.execSQL("ALTER TABLE " + TABLE_DINNER + " ADD COLUMN category TEXT DEFAULT 'Dinner';");
+            db.execSQL("ALTER TABLE " + TABLE_DINNER + " ADD COLUMN user_id INTEGER;");
+
             db.execSQL("ALTER TABLE " + TABLE_SNACKS + " ADD COLUMN category TEXT DEFAULT 'Snacks';");
+            db.execSQL("ALTER TABLE " + TABLE_SNACKS + " ADD COLUMN user_id INTEGER;");
+
             db.execSQL("ALTER TABLE " + TABLE_MIDNIGHT_SNACKS + " ADD COLUMN category TEXT DEFAULT 'Midnight Snacks';");
-        }
+            db.execSQL("ALTER TABLE " + TABLE_MIDNIGHT_SNACKS + " ADD COLUMN user_id INTEGER;");
 
-        //onCreate(db);
+                    // Create the Calendar table
+                    String createCalendarTable = "CREATE TABLE " + TABLE_CALENDAR + " ("
+                            + COLUMN_CALENDAR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            + COLUMN_CALENDAR_SELECTED_DATE + " TEXT NOT NULL, "
+                            + "user_id INTEGER, "
+                            + "breakfast_id INTEGER, "
+                            + "lunch_id INTEGER, "
+                            + "snacks_id INTEGER, "
+                            + "dinner_id INTEGER, "
+                            + "midnightsnacks_id INTEGER, "
+                            + "FOREIGN KEY (breakfast_id) REFERENCES " + TABLE_BREAKFAST + "(" + COLUMN_BREAKFAST_ID + "), "
+                            + "FOREIGN KEY (lunch_id) REFERENCES " + TABLE_LUNCH + "(" + COLUMN_LUNCH_ID + "), "
+                            + "FOREIGN KEY (snacks_id) REFERENCES " + TABLE_SNACKS + "(" + COLUMN_SNACKS_ID + "), "
+                            + "FOREIGN KEY (dinner_id) REFERENCES " + TABLE_DINNER + "(" + COLUMN_DINNER_ID + "), "
+                            + "FOREIGN KEY (midnightsnacks_id) REFERENCES " + TABLE_MIDNIGHT_SNACKS + "(" + COLUMN_MIDNIGHT_SNACKS_ID + "));";
+                    db.execSQL(createCalendarTable);
+                }
     }
 
 
-    //2
-    // Adding a new card into the database
-    public void addBook(String title, String hours, String minutes, String ingredients, String procedures) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
 
-        values.put(COLUMN_NOTE_TITLE, title);
-        values.put(COLUMN_NOTE_HOURS, hours);
-        values.put(COLUMN_NOTE_MINUTES, minutes);
-        values.put(COLUMN_NOTE_INGREDIENTS, ingredients);
-        values.put("category", "Customized");
 
-        long result = db.insert(TABLE_NOTES, null, values);
-        if(result == -1){
-            Toast.makeText(context, "Failed.", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     //2
     // Adding a new breakfast recipe into the database
-    public void addBreakfastRecipe(String title, String hours, String minutes, String ingredients, String procedures) {
-
+    public void addBreakfastRecipe(String title, String hours, String minutes, String ingredients, String procedures, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-            values.put(COLUMN_BREAKFAST_TITLE, title);
-            values.put(COLUMN_BREAKFAST_HOURS, hours);
-            values.put(COLUMN_BREAKFAST_MINUTES, minutes);
-            values.put(COLUMN_BREAKFAST_INGREDIENTS, ingredients);
-            values.put(COLUMN_BREAKFAST_PROCEDURES, procedures);
-            values.put("category", "Breakfast");
+        // Add values to the columns
+        values.put(COLUMN_BREAKFAST_TITLE, title);
+        values.put(COLUMN_BREAKFAST_HOURS, hours);
+        values.put(COLUMN_BREAKFAST_MINUTES, minutes);
+        values.put(COLUMN_BREAKFAST_INGREDIENTS, ingredients);
+        values.put(COLUMN_BREAKFAST_PROCEDURES, procedures);
+        values.put("category", "Breakfast"); // Set the category
+        values.put("user_id", userId);       // Set the user ID
 
+        // Insert the data into the database
         long result = db.insert(TABLE_BREAKFAST, null, values);
-            if(result == -1){
+        if (result == -1) {
             Toast.makeText(context, "Failed.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
         }
     }
     //3
     // Adding a new lunch recipe into the database
-    public void addLunchRecipe(String title, String hours, String minutes, String ingredients, String procedures) {
+    public void addLunchRecipe(String title, String hours, String minutes, String ingredients, String procedures, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -287,7 +327,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_LUNCH_MINUTES, minutes);
         values.put(COLUMN_LUNCH_INGREDIENTS, ingredients);
         values.put(COLUMN_LUNCH_PROCEDURES, procedures);
-        values.put("category", "Lunch");
+        values.put("category", "Lunch"); // Set the category
+        values.put("user_id", userId);       // Set the user ID
 
         long result = db.insert(TABLE_LUNCH, null, values);
         if(result == -1){
@@ -299,7 +340,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //4
     // Adding a new dinner recipe into the database
-    public void addDinnerRecipe(String title, String hours, String minutes, String ingredients, String procedures) {
+    public void addDinnerRecipe(String title, String hours, String minutes, String ingredients, String procedures, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -308,7 +349,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DINNER_MINUTES, minutes);
         values.put(COLUMN_DINNER_INGREDIENTS, ingredients);
         values.put(COLUMN_DINNER_PROCEDURES, procedures);
-        values.put("category", "Dinner");
+        values.put("category", "Dinner"); // Set the category
+        values.put("user_id", userId);       // Set the user ID
 
         long result = db.insert(TABLE_DINNER, null, values);
         if(result == -1){
@@ -320,7 +362,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //5
     // Adding a new snacks recipe into the database
-    public void addSnacksRecipe(String title, String hours, String minutes, String ingredients, String procedures) {
+    public void addSnacksRecipe(String title, String hours, String minutes, String ingredients, String procedures, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -329,7 +371,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SNACKS_MINUTES, minutes);
         values.put(COLUMN_SNACKS_INGREDIENTS, ingredients);
         values.put(COLUMN_SNACKS_PROCEDURES, procedures);
-        values.put("category", "Snacks");
+        values.put("category", "Snacks"); // Set the category
+        values.put("user_id", userId);       // Set the user ID
 
         long result = db.insert(TABLE_SNACKS, null, values);
         if(result == -1){
@@ -341,7 +384,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //6
     // Adding a new midnight snacks recipe into the database
-    public void addMidnightSnacksRecipe(String title, String hours, String minutes, String ingredients, String procedures) {
+    public void addMidnightSnacksRecipe(String title, String hours, String minutes, String ingredients, String procedures, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -350,7 +393,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_MIDNIGHT_SNACKS_MINUTES, minutes);
         values.put(COLUMN_MIDNIGHT_SNACKS_INGREDIENTS, ingredients);
         values.put(COLUMN_MIDNIGHT_SNACKS_PROCEDURES, procedures);
-        values.put("category", "Midnight Snacks");
+
+        values.put("category", "Snacks"); // Set the category
+        values.put("user_id", userId);       // Set the user ID
 
         long result = db.insert(TABLE_MIDNIGHT_SNACKS, null, values);
         if(result == -1){
@@ -363,102 +408,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    //3
-    // Reading all recipes from NOTES table
-    public Cursor readAllData(){
-        String createTable = "SELECT * FROM " + TABLE_NOTES;
+    // Reading all breakfast recipes for the logged-in user
+    public Cursor readAllBreakfastRecipes(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(createTable, null);
-
+        if (db != null) {
+            String query = "SELECT * FROM " + TABLE_BREAKFAST + " WHERE user_id = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         }
         return cursor;
     }
 
-    // Reading all recipes from BREAKFAST table
-    public Cursor readAllBreakfastRecipes() {
-        String createTable = "SELECT * FROM " + TABLE_BREAKFAST;
+    // Reading all lunch recipes for the logged-in user
+    public Cursor readAllLunchRecipes(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(createTable, null);
-
+        if (db != null) {
+            String query = "SELECT * FROM " + TABLE_LUNCH + " WHERE user_id = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         }
         return cursor;
     }
 
-    // Reading all recipes from LUNCH table
-    public Cursor readAllLunchRecipes() {
-        String createTable = "SELECT * FROM " + TABLE_LUNCH;
+    // Reading all dinner recipes for the logged-in user
+    public Cursor readAllDinnerRecipes(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(createTable, null);
-
+        if (db != null) {
+            String query = "SELECT * FROM " + TABLE_DINNER + " WHERE user_id = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         }
         return cursor;
     }
 
-
-    // Reading all recipes from DINNER table
-    public Cursor readAllDinnerRecipes() {
-        String createTable = "SELECT * FROM " + TABLE_DINNER;
+    // Reading all snacks recipes for the logged-in user
+    public Cursor readAllSnacksRecipes(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(createTable, null);
-
+        if (db != null) {
+            String query = "SELECT * FROM " + TABLE_SNACKS + " WHERE user_id = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         }
         return cursor;
     }
 
-    // Reading all recipes from SNACKS table
-    public Cursor readAllSnacksRecipes() {
-        String createTable = "SELECT * FROM " + TABLE_SNACKS;
+    // Reading all midnight snacks recipes for the logged-in user
+    public Cursor readAllMidnightSnacksRecipes(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(createTable, null);
-
-        }
-        return cursor;
-    }
-
-    // Reading all recipes from MIDNIGHT SNACKS table
-    public Cursor readAllMidnightSnacksRecipes() {
-        String createTable = "SELECT * FROM " + TABLE_MIDNIGHT_SNACKS;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(createTable, null);
-
+        if (db != null) {
+            String query = "SELECT * FROM " + TABLE_MIDNIGHT_SNACKS + " WHERE user_id = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
         }
         return cursor;
     }
 
 
-    //4
-    // Method to Update/Edit an existing NOTE RECIPE
-    public void updateData(String row_id, String title, String hours, String minutes, String ingredients, String procedures) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NOTE_TITLE, title);
-        values.put(COLUMN_NOTE_HOURS, hours);
-        values.put(COLUMN_NOTE_MINUTES, minutes);
-        values.put(COLUMN_NOTE_INGREDIENTS, ingredients);
-        values.put(COLUMN_NOTE_PROCEDURES, procedures);
-
-        long result = db.update(TABLE_NOTES, values, "note_id=?", new String[]{row_id});
-        if(result == -1){
-            Toast.makeText(context, "Failed.", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     // Method to Update/Edit an existing BREAKFAST RECIPE
-    public void updateBreakfastRecipe(String row_id, String title, String hours, String minutes, String ingredients, String procedures) {
+    public void updateBreakfastRecipe(String row_id, int userId, String title, String hours, String minutes, String ingredients, String procedures) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_BREAKFAST_TITLE, title);
@@ -467,17 +475,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_BREAKFAST_INGREDIENTS, ingredients);
         values.put(COLUMN_BREAKFAST_PROCEDURES, procedures);
 
-        long result = db.update(TABLE_BREAKFAST, values, "breakfast_id=?", new String[]{row_id});
-        if(result == -1){
+        long result = db.update(TABLE_BREAKFAST, values, "breakfast_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
+        if (result == -1) {
             Toast.makeText(context, "Failed.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     // Method to Update/Edit an existing LUNCH RECIPE
-    public void updateLunchRecipe(String row_id, String title, String hours, String minutes, String ingredients, String procedures) {
+    public void updateLunchRecipe(String row_id, int userId, String title, String hours, String minutes, String ingredients, String procedures) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_LUNCH_TITLE, title);
@@ -486,15 +493,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_LUNCH_INGREDIENTS, ingredients);
         values.put(COLUMN_LUNCH_PROCEDURES, procedures);
 
-        long result = db.update(TABLE_LUNCH, values, "lunch_id=?", new String[]{row_id});
-        if(result == -1){
+        long result = db.update(TABLE_LUNCH, values, "lunch_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
+        if (result == -1) {
             Toast.makeText(context, "Failed.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
         }
     }
+
     // Method to Update/Edit an existing DINNER RECIPE
-    public void updateDinnerRecipe(String row_id, String title, String hours, String minutes, String ingredients, String procedures) {
+    public void updateDinnerRecipe(String row_id, int userId, String title, String hours, String minutes, String ingredients, String procedures) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_DINNER_TITLE, title);
@@ -503,7 +511,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DINNER_INGREDIENTS, ingredients);
         values.put(COLUMN_DINNER_PROCEDURES, procedures);
 
-        long result = db.update(TABLE_DINNER, values, "dinner_id=?", new String[]{row_id});
+        long result = db.update(TABLE_DINNER, values, "dinner_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
         if(result == -1){
             Toast.makeText(context, "Failed.", Toast.LENGTH_SHORT).show();
         }else{
@@ -512,7 +520,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Method to Update/Edit an existing SNACKS RECIPE
-    public void updateSnacksRecipe(String row_id, String title, String hours, String minutes, String ingredients, String procedures) {
+    public void updateSnacksRecipe(String row_id, int userId, String title, String hours, String minutes, String ingredients, String procedures) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_SNACKS_TITLE, title);
@@ -521,7 +529,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SNACKS_INGREDIENTS, ingredients);
         values.put(COLUMN_SNACKS_PROCEDURES, procedures);
 
-        long result = db.update(TABLE_SNACKS, values, "snacks_id=?", new String[]{row_id});
+        long result = db.update(TABLE_SNACKS, values, "snacks_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
         if(result == -1){
             Toast.makeText(context, "Failed.", Toast.LENGTH_SHORT).show();
         }else{
@@ -530,7 +538,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Method to Update/Edit an existing MIDNIGHT SNACKS RECIPE
-    public void updateMidnightSnacksRecipe(String row_id, String title, String hours, String minutes, String ingredients, String procedures) {
+    public void updateMidnightSnacksRecipe(String row_id, int userId, String title, String hours, String minutes, String ingredients, String procedures) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_MIDNIGHT_SNACKS_TITLE, title);
@@ -539,7 +547,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_MIDNIGHT_SNACKS_INGREDIENTS, ingredients);
         values.put(COLUMN_MIDNIGHT_SNACKS_PROCEDURES, procedures);
 
-        long result = db.update(TABLE_MIDNIGHT_SNACKS, values, "midnightsnacks_id=?", new String[]{row_id});
+        long result = db.update(TABLE_MIDNIGHT_SNACKS, values, "midnightsnacks_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
+
         if(result == -1){
             Toast.makeText(context, "Failed.", Toast.LENGTH_SHORT).show();
         }else{
@@ -549,105 +558,88 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    //5
-    //Method to delete a NOTES Recipe
-    public void deleteOneRow(String row_id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_NOTES, "note_id=?", new String[]{row_id});
-        if(result == -1){
-            Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
     //Method to delete a BREAKFAST Recipe
-    public void deleteBreakfastRecipe(String row_id) {
+    public void deleteBreakfastRecipe(String row_id, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_BREAKFAST, "breakfast_id=?", new String[]{row_id});
-        if(result == -1){
+        long result = db.delete(TABLE_BREAKFAST, "breakfast_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
+        if (result == -1) {
             Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     //Method to delete a LUNCH Recipe
-    public void deleteLunchRecipe(String row_id) {
+    public void deleteLunchRecipe(String row_id, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_LUNCH, "lunch_id=?", new String[]{row_id});
-        if(result == -1){
+        long result = db.delete(TABLE_LUNCH, "lunch_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
+        if (result == -1) {
             Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
         }
     }
 
 
     //Method to delete a DINNER Recipe
-    public void deleteDinnerRecipe(String row_id) {
+    public void deleteDinnerRecipe(String row_id, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_DINNER, "dinner_id=?", new String[]{row_id});
-        if(result == -1){
+        long result = db.delete(TABLE_DINNER, "dinner_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
+        if (result == -1) {
             Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     //Method to delete a SNACKS Recipe
-    public void deleteSnacksRecipe(String row_id) {
+    public void deleteSnacksRecipe(String row_id, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_SNACKS, "snacks_id=?", new String[]{row_id});
-        if(result == -1){
+        long result = db.delete(TABLE_SNACKS, "snacks_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
+        if (result == -1) {
             Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     //Method to delete a MIDNIGHT SNACKS Recipe
-    public void deleteMidnightSnacksRecipe(String row_id) {
+    public void deleteMidnightSnacksRecipe(String row_id, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_MIDNIGHT_SNACKS, "midnightsnacks_id=?", new String[]{row_id});
-        if(result == -1){
+        long result = db.delete(TABLE_MIDNIGHT_SNACKS, "midnightsnacks_id=? AND user_id=?", new String[]{row_id, String.valueOf(userId)});
+        if (result == -1) {
             Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
         }
     }
 
 
+//METHOD TO fetch recipes from all category tables and store them in a list
+public List<Recipe> getAllRecipes(int userId) {
+    List<Recipe> recipes = new ArrayList<>();
+    SQLiteDatabase db = this.getReadableDatabase();
 
+    // Query for each category, including all fields
+    Cursor breakfastCursor = db.rawQuery("SELECT title, hours, minutes, ingredients, procedures FROM Breakfast WHERE user_id = ?", new String[]{String.valueOf(userId)});
+    addRecipesToList(recipes, breakfastCursor, "Breakfast");
 
+    Cursor lunchCursor = db.rawQuery("SELECT title, hours, minutes, ingredients, procedures FROM Lunch WHERE user_id = ?", new String[]{String.valueOf(userId)});
+    addRecipesToList(recipes, lunchCursor, "Lunch");
 
+    Cursor dinnerCursor = db.rawQuery("SELECT title, hours, minutes, ingredients, procedures FROM Dinner WHERE user_id = ?", new String[]{String.valueOf(userId)});
+    addRecipesToList(recipes, dinnerCursor, "Dinner");
 
-//di ko pa natatry: METHOD TO fetch recipes from all category tables and store them in a list
+    Cursor snacksCursor = db.rawQuery("SELECT title, hours, minutes, ingredients, procedures FROM Snacks WHERE user_id = ?", new String[]{String.valueOf(userId)});
+    addRecipesToList(recipes, snacksCursor, "Snacks");
 
-    public List<Recipe> getAllRecipes() {
-        List<Recipe> recipes = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
+    Cursor midnightSnacksCursor = db.rawQuery("SELECT title, hours, minutes, ingredients, procedures FROM MidnightSnacks WHERE user_id = ?", new String[]{String.valueOf(userId)});
+    addRecipesToList(recipes, midnightSnacksCursor, "Midnight Snacks");
 
-        // Query for each category
-        Cursor breakfastCursor = db.rawQuery("SELECT title, hours, minutes FROM Breakfast", null);
-        addRecipesToList(recipes, breakfastCursor, "Breakfast");
-
-        Cursor lunchCursor = db.rawQuery("SELECT title, hours, minutes FROM Lunch", null);
-        addRecipesToList(recipes, lunchCursor, "Lunch");
-
-        Cursor dinnerCursor = db.rawQuery("SELECT title, hours, minutes FROM Dinner", null);
-        addRecipesToList(recipes, dinnerCursor, "Dinner");
-
-        Cursor snacksCursor = db.rawQuery("SELECT title, hours, minutes FROM Snacks", null);
-        addRecipesToList(recipes, snacksCursor, "Snacks");
-
-        Cursor midnightSnacksCursor = db.rawQuery("SELECT title, hours, minutes FROM MidnightSnacks", null);
-        addRecipesToList(recipes, midnightSnacksCursor, "Midnight Snacks");
-
-        return recipes;
-    }
+    return recipes;
+}
 
     private void addRecipesToList(List<Recipe> recipes, Cursor cursor, String category) {
         if (cursor.moveToFirst()) {
@@ -655,26 +647,153 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String title = cursor.getString(0);
                 String hours = cursor.getString(1);
                 String minutes = cursor.getString(2);
-                recipes.add(new Recipe(title, hours, minutes, category));
+                String ingredients = cursor.getString(3); // New
+                String procedures = cursor.getString(4);  // New
+                recipes.add(new Recipe(title, hours, minutes, category, ingredients, procedures));
             } while (cursor.moveToNext());
         }
         cursor.close();
     }
 
 
-    // Method to get user details by username
-    public Cursor getUserDetails(String username) {
+    // Method to get user details based on user_id
+    public Cursor getUserDetailsById(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_USERS,
-                new String[]{COLUMN_USER_USERNAME, COLUMN_USER_FIRSTNAME, COLUMN_USER_LASTNAME},
-                COLUMN_USER_USERNAME + "=?",
-                new String[]{username},
-                null, null, null);
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM " + TABLE_USERS + " WHERE user_id = ?",
+                new String[]{String.valueOf(userId)}
+        );
+        return cursor;
     }
 
 
 
 
-//METHOD TO GET DETAILS FROM RANDOM RECIPE SUGGESTIONS
+    public Cursor getAllBreakfastRecipesForCalendar() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT breakfast_id, title, hours, minutes FROM " + TABLE_BREAKFAST, null);
+    }
+
+
+    public Cursor getAllLunchRecipesForCalendar() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT lunch_id, title, hours, minutes FROM " + TABLE_LUNCH, null);
+    }
+
+
+    public Cursor getAllSnacksRecipesForCalendar() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT snacks_id, title, hours, minutes FROM " + TABLE_SNACKS, null);
+    }
+
+
+    public Cursor getAllDinnerRecipesForCalendar() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT dinner_id, title, hours, minutes FROM " + TABLE_DINNER, null);
+    }
+
+
+    public Cursor getAllMidnightSnacksRecipesForCalendar() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT midnightsnacks_id, title, hours, minutes FROM " + TABLE_MIDNIGHT_SNACKS, null);
+    }
+
+    public boolean isDateInCalendar(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = COLUMN_CALENDAR_SELECTED_DATE + " = ?";
+        String[] selectionArgs = { date };
+        Cursor cursor = db.query(TABLE_CALENDAR, null, selection, selectionArgs, null, null, null);
+        boolean exists = (cursor != null && cursor.getCount() > 0);
+        if (cursor != null) {
+            cursor.close();
+        }
+        return exists;
+    }
+
+
+    public void updateCalendarEntry(String date, int recipeId, String category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String column = getColumnForCategory(category);
+        values.put(column, recipeId);
+        db.update(TABLE_CALENDAR, values, COLUMN_CALENDAR_SELECTED_DATE + " = ?", new String[]{date});
+    }
+
+
+    public void insertCalendarEntry(String date, int recipeId, String category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CALENDAR_SELECTED_DATE, date);
+        String column = getColumnForCategory(category);
+        values.put(column, recipeId);
+        db.insert(TABLE_CALENDAR, null, values);
+    }
+
+
+    private String getColumnForCategory(String category) {
+        switch (category) {
+            case "Breakfast":
+                return COLUMN_BREAKFAST_ID;
+            case "Lunch":
+                return COLUMN_LUNCH_ID;
+            case "Snacks":
+                return COLUMN_SNACKS_ID;
+            case "Dinner":
+                return COLUMN_DINNER_ID;
+            case "Midnight Snacks":
+                return COLUMN_MIDNIGHT_SNACKS_ID;
+            default:
+                throw new IllegalArgumentException("Unknown category: " + category);
+        }
+    }
+
+
+    public Cursor getCalendarEntryByDate(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_CALENDAR, null, COLUMN_CALENDAR_SELECTED_DATE + " = ?", new String[]{date}, null, null, null);
+    }
+
+
+    public RecipeCalendar getRecipeById(int recipeId, String category) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        RecipeCalendar recipe = null;
+
+
+        switch (category) {
+            case "Breakfast":
+                cursor = db.query(TABLE_BREAKFAST, null, COLUMN_BREAKFAST_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+            case "Lunch":
+                cursor = db.query(TABLE_LUNCH, null, COLUMN_LUNCH_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+            case "Snacks":
+                cursor = db.query(TABLE_SNACKS, null, COLUMN_SNACKS_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+            case "Dinner":
+                cursor = db.query(TABLE_DINNER, null, COLUMN_DINNER_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+            case "Midnight Snacks":
+                cursor = db.query(TABLE_MIDNIGHT_SNACKS, null, COLUMN_MIDNIGHT_SNACKS_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+        }
+
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    String title = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_TITLE)); // Adjust based on the table
+                    int hours = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_HOURS)); // Adjust based on the table
+                    int minutes = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_MINUTES)); // Adjust based on the table
+                    recipe = new RecipeCalendar(recipeId, title, hours, minutes, category);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return recipe;
+
+
+    }
+
 
 }

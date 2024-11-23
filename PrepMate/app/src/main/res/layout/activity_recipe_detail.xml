@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:title="New Recipe"
+        app:title="Recipe Details"
         app:titleTextColor="@color/earth"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -36,56 +36,64 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <EditText
-                    android:id="@+id/title_input"
+                <TextView
+                    android:id="@+id/recipeTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corner"
-                    android:gravity="center"
-                    android:hint="Recipe Name"
+                    android:gravity="left"
+                    android:hint="Recipe Title"
                     android:padding="10dp"
-                    android:textSize="18sp" />
+                    android:textStyle="bold"
+                    android:textSize="25sp" />
 
                 <TextView
+                    android:id="@+id/recipeCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top|center"
-                    android:padding="16dp"
-                    android:text="Preparation Time"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:text="Category"
+                    android:textStyle="italic"
                     android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/spinner_hours"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/corner_radius"
-                        android:padding="10dp"
-                        android:spinnerMode="dropdown"/>
+                        android:gravity="left"
+                        android:text="Preparation Time:"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
 
-                    <Spinner
-                        android:id="@+id/spinner_minutes"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/recipeHours"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/corner_radius2"
-                        android:padding="10dp"
-                        android:spinnerMode="dropdown"/>
+                        android:layout_marginStart="20dp"
+                        android:text="hours"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/recipeMinutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="minutes"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top|center"
-                    android:padding="16dp"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:textStyle="bold"
                     android:text="Ingredients"
                     android:textSize="16sp" />
 
@@ -96,13 +104,13 @@
                     app:cardCornerRadius="8dp"
                     app:cardElevation="6dp">
 
-                    <EditText
-                        android:id="@+id/ingredients_input"
+                    <TextView
+                        android:id="@+id/recipeIngredients"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="top"
-                        android:hint="List your ingredients here"
+                        android:hint="Ingredients List"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
                         android:scrollbars="vertical"
@@ -113,8 +121,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top|center"
-                    android:padding="16dp"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:textStyle="bold"
                     android:text="Procedures"
                     android:textSize="16sp" />
 
@@ -125,13 +134,13 @@
                     app:cardCornerRadius="8dp"
                     app:cardElevation="4dp">
 
-                    <EditText
-                        android:id="@+id/procedures_input"
+                    <TextView
+                        android:id="@+id/recipeProcedures"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="top"
-                        android:hint="Write your procedures here"
+                        android:hint="Procedured List"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
                         android:textSize="16sp" />
@@ -150,7 +159,7 @@
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:text="Use Recipe" />
 
     </LinearLayout>
 

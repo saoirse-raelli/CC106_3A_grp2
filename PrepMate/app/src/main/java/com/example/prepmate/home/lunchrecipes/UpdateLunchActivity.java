@@ -2,6 +2,7 @@ package com.example.prepmate.home.lunchrecipes;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ public class UpdateLunchActivity extends AppCompatActivity {
     Spinner hours_input, minutes_input;
     Button update_button, delete_button;
     String id, title, hours, minutes, ingredients, procedures;
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class UpdateLunchActivity extends AppCompatActivity {
         update_button = findViewById(R.id.update_button);
         delete_button = findViewById(R.id.delete_button);
 
+        // Get the logged-in user's ID
+        userId = getLoggedInUserId();
 
         //Set actionbar title after getAndSetIntentData method
         ActionBar ab = getSupportActionBar();
@@ -75,7 +79,7 @@ public class UpdateLunchActivity extends AppCompatActivity {
                 minutes = minutes_input.getSelectedItem().toString();
                 ingredients = ingredients_input.getText().toString().trim();
                 procedures = procedures_input.getText().toString().trim();
-                databaseHelper.updateLunchRecipe(id, title, hours, minutes, ingredients, procedures);
+                databaseHelper.updateLunchRecipe(id, userId, title, hours, minutes, ingredients, procedures);
 
                 Intent resultIntent = new Intent();
                 setResult(RESULT_OK, resultIntent);  // Sending back the result
@@ -131,7 +135,7 @@ public class UpdateLunchActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(UpdateLunchActivity.this);
-                databaseHelper.deleteLunchRecipe(id);
+                databaseHelper.deleteLunchRecipe(id, userId);
 
                 Intent resultIntent = new Intent();
                 setResult(RESULT_OK, resultIntent);
@@ -156,5 +160,11 @@ public class UpdateLunchActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    // Method to get the logged-in user's ID (You should implement this based on your login system)
+    private int getLoggedInUserId() {
+        // Example logic for retrieving the user_id from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("user_id", -1); // Return the user_id stored during login, or -1 if not logged in
     }
 }

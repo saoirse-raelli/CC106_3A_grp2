@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,14 @@ import android.widget.ImageButton;
 
 import com.example.prepmate.NotificationMainActivity;
 import com.example.prepmate.R;
+import com.example.prepmate.calendar.CalendarActivity;
 import com.example.prepmate.home.breakfastrecipes.BreakfastRecipesActivity;
-import com.example.prepmate.home.customrecipes.CustomRecipesActivity;
 import com.example.prepmate.home.dinnerrecipes.DinnerRecipesActivity;
 import com.example.prepmate.home.lunchrecipes.LunchRecipesActivity;
 import com.example.prepmate.home.midnightsnacksrecipes.MidnightRecipesActivity;
 import com.example.prepmate.home.snacksrecipes.SnacksRecipesActivity;
+
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,13 +77,6 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Initialize buttons
-        btnCustom = view.findViewById(R.id.btnCustom);
-        btnCustom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openCustomRecipesActivity();
-            }
-        });
 
         btnBreakfast = view.findViewById(R.id.btnBreakfast);
         btnBreakfast.setOnClickListener(new View.OnClickListener() {
@@ -143,12 +139,6 @@ public class HomeFragment extends Fragment {
     }
 //INTENT FOR BUTTONS
 
-    private void openCustomRecipesActivity() {
-        if (getActivity() != null) {  // Add null check for safety
-            Intent intent = new Intent(getActivity(), CustomRecipesActivity.class);
-            startActivity(intent);
-        }
-    }
     //1
     private void openBreakfastRecipesActivity() {
         if (getActivity() != null) {  // Add null check for safety
@@ -188,7 +178,9 @@ public class HomeFragment extends Fragment {
 //Notification
     private void openNotificationMainActivity() {
         if (getActivity() != null) {  // Add null check for safety
-            Intent intent = new Intent(getActivity(), NotificationMainActivity.class);
+            Intent intent = new Intent(getActivity(), CalendarActivity.class);
+            intent.putExtra("reset", true);
+            Log.d("SendIntent", "Sending reset = true");
             startActivity(intent);
         }
     }

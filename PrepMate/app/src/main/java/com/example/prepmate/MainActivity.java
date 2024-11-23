@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import androidx.appcompat.app.AppCompatDelegate; // Import for AppCompatDelegate
 import com.example.prepmate.dashboard.DashboardFragment;
 import com.example.prepmate.databinding.ActivityMainBinding;
 import com.example.prepmate.home.HomeFragment;
@@ -23,11 +22,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
 
         // Check if user is logged in: App should start from sign up if not logged in
-        SharedPreferences loginPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        boolean isLoggedIn = loginPreferences.getBoolean("isLoggedIn", false);
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
         if (!isLoggedIn) {
             // If the user is not logged in, redirect them to LoginPage
@@ -37,31 +36,32 @@ public class MainActivity extends AppCompatActivity {
             return;  // Stop further execution
         }
 
+
         // METHOD FOR VIEW BINDING
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+
             int itemId = item.getItemId();
 
             if (itemId == R.id.home) {
                 // Handle home item
+
                 replaceFragment(new HomeFragment());
-            } else if (itemId == R.id.dashboard) {
-                // Handle dashboard item
-                replaceFragment(new DashboardFragment());
             } else if (itemId == R.id.profile) {
                 // Handle profile item
                 replaceFragment(new ProfileFragment());
             } else if (itemId == R.id.suggestions) {
-                // Handle suggestions item
+                // Handle profile item
                 replaceFragment(new SuggestionFragment());
             }
 
             return true; // Return true to display the selected item as the current tab
         });
     }
+
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
