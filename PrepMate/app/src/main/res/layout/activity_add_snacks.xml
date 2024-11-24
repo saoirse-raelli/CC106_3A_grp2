@@ -40,6 +40,7 @@
                     android:id="@+id/title_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/suave"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_corner"
                     android:gravity="center"
@@ -50,6 +51,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/suave"
                     android:gravity="top|center"
                     android:padding="16dp"
                     android:text="Preparation Time"
@@ -86,6 +88,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="top|center"
                     android:padding="16dp"
+                    android:textColor="@color/suave"
                     android:text="Ingredients"
                     android:textSize="16sp" />
 
@@ -100,6 +103,7 @@
                         android:id="@+id/ingredients_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/suave"
                         android:background="@android:color/transparent"
                         android:gravity="top"
                         android:hint="List your ingredients here"
@@ -116,6 +120,7 @@
                     android:gravity="top|center"
                     android:padding="16dp"
                     android:text="Procedures"
+                    android:textColor="@color/suave"
                     android:textSize="16sp" />
 
                 <androidx.cardview.widget.CardView
@@ -131,6 +136,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="top"
+                        android:textColor="@color/suave"
                         android:hint="Write your procedures here"
                         android:inputType="textMultiLine"
                         android:padding="10dp"

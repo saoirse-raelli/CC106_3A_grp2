@@ -40,6 +40,7 @@
                     android:id="@+id/title_input2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/suave"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_corner"
                     android:gravity="center"
@@ -50,6 +51,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/suave"
                     android:gravity="top|center"
                     android:padding="16dp"
                     android:text="Preparation Time"
@@ -86,6 +88,7 @@
                     android:gravity="top|center"
                     android:padding="16dp"
                     android:text="Ingredients"
+                    android:textColor="@color/suave"
                     android:textSize="16sp" />
 
                 <androidx.cardview.widget.CardView
@@ -102,6 +105,7 @@
                         android:background="@android:color/transparent"
                         android:gravity="top"
                         android:hint="List your ingredients here"
+                        android:textColor="@color/suave"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
                         android:scrollbars="vertical"
@@ -115,6 +119,7 @@
                     android:gravity="top|center"
                     android:padding="16dp"
                     android:text="Procedures"
+                    android:textColor="@color/suave"
                     android:textSize="16sp" />
 
                 <androidx.cardview.widget.CardView
@@ -131,6 +136,7 @@
                         android:background="@android:color/transparent"
                         android:gravity="top"
                         android:hint="Write your procedures here"
+                        android:textColor="@color/suave"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
                         android:textSize="16sp" />
