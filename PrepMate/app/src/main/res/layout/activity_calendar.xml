@@ -19,26 +19,39 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/selectedDateText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/calendarView"
-        android:padding="8dp"
-        android:textSize="18sp"
-        android:textColor="@color/primaryDarkColor"
-        android:hint="Selected Date"
-        android:textStyle="bold" />
+        android:background="@color/suave"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/addRecipesButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:enabled="true"
-        android:text="Select a Date"
-        android:textStyle="bold"/>
+        <Button
+            android:id="@+id/addRecipesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:enabled="true"
+            android:text="Select a Date"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/selectedDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:textColor="@color/dirtywhite"
+            android:textColorHint="@color/dirtywhite"
+            android:hint=":"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipesRecyclerView"
