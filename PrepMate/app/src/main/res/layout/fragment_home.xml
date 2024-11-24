@@ -34,7 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
             android:text="Create Plan"
-            android:textColor="@color/suave"
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/btnNotify"
