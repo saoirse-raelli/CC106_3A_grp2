@@ -47,7 +47,6 @@
         android:gravity="center"
         android:layout_gravity="center_horizontal"/>
 
-    <!-- Add this inside your activity or fragment layout -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,15 +54,22 @@
         app:cardElevation="4dp"
         app:cardCornerRadius="18dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="25dp"
-            android:text="Introducing the PrepMate Planner, your ultimate offline meal planning companion! With PrepMate, you can easily input your favorite recipes into the app, making it simple to organize and manage your meals without needing an internet connection.\n\nSimply add the recipes you love, along with the ingredients and cooking instructions. You can set specific dates and times for when you plan to prepare each meal. The PrepMate Planner will then send you timely notifications to remind you when it’s time to start cooking, helping you stay on track with your meal prep.\n\nWhether you’re planning for a busy week ahead or just want to streamline your cooking routine, PrepMate is designed to make your life easier. Enjoy the convenience of having all your recipes and meal reminders in one place, all while being completely offline. Get ready to cook with confidence and never miss a meal again with PrepMate Planner!"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp" />
+        <android.widget.ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="25dp"
+                android:text="Introducing the PrepMate Planner, your ultimate offline meal planning companion! With PrepMate, you can easily input your favorite recipes into the app, making it simple to organize and manage your meals without needing an internet connection.\n\nSimply add the recipes you love, along with the ingredients and cooking instructions. You can set specific dates and times for when you plan to prepare each meal. The PrepMate Planner will then send you timely notifications to remind you when it’s time to start cooking, helping you stay on track with your meal prep.\n\nWhether you’re planning for a busy week ahead or just want to streamline your cooking routine, PrepMate is designed to make your life easier. Enjoy the convenience of having all your recipes and meal reminders in one place, all while being completely offline. Get ready to cook with confidence and never miss a meal again with PrepMate Planner!"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp" />
+
+        </android.widget.ScrollView>
+
     </androidx.cardview.widget.CardView>
 
 

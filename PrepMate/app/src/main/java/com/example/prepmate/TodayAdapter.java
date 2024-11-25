@@ -2,12 +2,14 @@ package com.example.prepmate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prepmate.R;
@@ -37,12 +39,21 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.RecipeViewHo
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         RecipeCalendar recipe = recipes.get(position);
+
+        // Set the text for each TextView
         holder.titleTextView.setText(recipe.getTitle());
         holder.hoursTextView.setText(String.valueOf(recipe.getHours()));
         holder.minutesTextView.setText(String.valueOf(recipe.getMinutes()));
         holder.categoryTextView.setText(recipe.getCategory());
 
-        // Handle item click if needed
+        // Change the CardView color if the recipe is invalid (ID = -1)
+        if (recipe.getId() == -1) {
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#D3D3D3")); // Set the CardView color to red
+        } else {
+            holder.cardView.setCardBackgroundColor(Color.GREEN); // Reset to transparent if valid
+        }
+
+        // Handle item click
         holder.itemView.setOnClickListener(view -> {
             Context context = view.getContext();
             Intent intent;
@@ -84,6 +95,7 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.RecipeViewHo
         TextView hoursTextView;
         TextView minutesTextView;
         TextView categoryTextView;
+        CardView cardView; // Reference to CardView
 
         RecipeViewHolder(View itemView) {
             super(itemView);
@@ -91,6 +103,7 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.RecipeViewHo
             hoursTextView = itemView.findViewById(R.id.hours);
             minutesTextView = itemView.findViewById(R.id.minutes);
             categoryTextView = itemView.findViewById(R.id.category);
+            cardView = itemView.findViewById(R.id.cardView); // Initialize CardView
         }
     }
 }
