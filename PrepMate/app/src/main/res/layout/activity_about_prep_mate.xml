@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:titleTextColor="@color/earth"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:navigationIcon="@drawable/ic_back"/>
+
+    <!-- TextView at the top -->
+    <TextView
+        android:id="@+id/textViewTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="About Prepmate"
+        android:textSize="28sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginBottom="10dp" />
+
+
+    <!-- ImageView centered vertically -->
+    <ImageView
+        android:id="@+id/imageViewCenter"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/prepnewlogo"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
+        android:background="@drawable/shadow_background"
+        android:contentDescription="Image in the center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- First TextView below the image -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PrepMate v.1"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"/>
+
+    <!-- Add this inside your activity or fragment layout -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="36dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:text="Introducing the PrepMate Planner, your ultimate offline meal planning companion! With PrepMate, you can easily input your favorite recipes into the app, making it simple to organize and manage your meals without needing an internet connection.\n\nSimply add the recipes you love, along with the ingredients and cooking instructions. You can set specific dates and times for when you plan to prepare each meal. The PrepMate Planner will then send you timely notifications to remind you when it’s time to start cooking, helping you stay on track with your meal prep.\n\nWhether you’re planning for a busy week ahead or just want to streamline your cooking routine, PrepMate is designed to make your life easier. Enjoy the convenience of having all your recipes and meal reminders in one place, all while being completely offline. Get ready to cook with confidence and never miss a meal again with PrepMate Planner!"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp" />
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</LinearLayout>

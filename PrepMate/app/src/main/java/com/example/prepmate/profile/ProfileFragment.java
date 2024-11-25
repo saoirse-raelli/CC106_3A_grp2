@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.prepmate.AboutPrepMate;
 import com.example.prepmate.DatabaseHelper;
 import com.example.prepmate.LoginActivity;
 import com.example.prepmate.R;
@@ -27,7 +28,7 @@ import com.example.prepmate.R;
 public class ProfileFragment extends Fragment {
 
     private TextView nameTextView, firstNameTextView, lastNameTextView;
-    private Button logoutButton;
+    private Button logoutButton, btnAbout;
     private DatabaseHelper databaseHelper;
     SwitchCompat switchCompat;
     boolean isNightMode;
@@ -63,6 +64,7 @@ public class ProfileFragment extends Fragment {
         firstNameTextView = view.findViewById(R.id.firstNameTextView);
         lastNameTextView = view.findViewById(R.id.lastNameTextView);
         logoutButton = view.findViewById(R.id.btnLogout);
+        btnAbout = view.findViewById(R.id.btnAbout);
 
         // Initialize the database helper
         databaseHelper = new DatabaseHelper(getContext());
@@ -81,6 +83,11 @@ public class ProfileFragment extends Fragment {
 
         // Set up the logout button click listener
         logoutButton.setOnClickListener(v -> showLogoutConfirmationDialog());
+        btnAbout.setOnClickListener(v -> {
+            // Create an Intent to go to the AboutPrepMateActivity
+            Intent intent = new Intent(getActivity(), AboutPrepMate.class);
+            startActivity(intent);  // Start the activity
+        });
 
         return view;
     }

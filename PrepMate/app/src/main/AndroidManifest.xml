@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PrepMate"
         tools:targetApi="31">
-
+        <activity
+            android:name=".AboutPrepMate"
+            android:exported="false" />
         <activity
             android:name=".RecipeDetailActivity"
             android:exported="false" />
@@ -88,13 +90,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".calendar.breakfastcalendar.BreakfastCalendarActivity" />
         <activity android:name=".calendar.lunchcalendar.LunchCalendarActivity" />
         <activity android:name=".calendar.snackscalendar.SnacksCalendarActivity" />
         <activity android:name=".calendar.dinnercalendar.DinnerCalendarActivity" />
         <activity android:name=".calendar.midnightsnackscalendar.MidnightSnacksCalendarActivity" />
-        <activity android:name=".calendar.CalendarActivity"></activity>
+        <activity android:name=".calendar.CalendarActivity" />
     </application>
 
 </manifest>
