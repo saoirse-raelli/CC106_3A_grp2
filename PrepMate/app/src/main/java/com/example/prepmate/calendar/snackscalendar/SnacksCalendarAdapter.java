@@ -2,6 +2,7 @@ package com.example.prepmate.calendar.snackscalendar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,14 @@ public class SnacksCalendarAdapter extends RecyclerView.Adapter<SnacksCalendarAd
     private String selectedDate;
     private Context context;
     private DatabaseHelper databaseHelper;
+    private int userId; // Ensure this is properly passed and used
 
-    public SnacksCalendarAdapter(List<RecipeCalendar> snacksRecipes, String selectedDate, Context context) {
+    public SnacksCalendarAdapter(List<RecipeCalendar> snacksRecipes, String selectedDate, Context context, int userId) {
         this.snacksRecipes = snacksRecipes;
         this.selectedDate = selectedDate;
         this.context = context;
-        this.databaseHelper = new DatabaseHelper(context); // Initialize the DatabaseHelper once
+        this.userId = userId; // Initialize userId correctly
+        this.databaseHelper = new DatabaseHelper(context); // Initialize DatabaseHelper
     }
 
     @NonNull
@@ -51,11 +54,14 @@ public class SnacksCalendarAdapter extends RecyclerView.Adapter<SnacksCalendarAd
         holder.addMealButton.setOnClickListener(v -> {
             int snacksId = recipe.getId(); // Get the ID of the recipe
 
-            // Update or insert the breakfast ID for the selected date
+            // Log the userId to debug
+            Log.d("SnacksCalendarAdapter", "Inserting recipe with userId: " + userId);
+
+            // Update or insert the snacks ID for the selected date
             if (databaseHelper.isDateInCalendar(selectedDate)) {
-                databaseHelper.updateCalendarEntry(selectedDate, snacksId, "Snacks");
+                databaseHelper.updateCalendarEntry(selectedDate, snacksId, "Snacks", userId);
             } else {
-                databaseHelper.insertCalendarEntry(selectedDate, snacksId, "Snacks");
+                databaseHelper.insertCalendarEntry(selectedDate, snacksId, "Snacks", userId);
             }
 
             Toast.makeText(context, "Added " + recipe.getTitle() + " to calendar!", Toast.LENGTH_SHORT).show();

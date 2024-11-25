@@ -112,8 +112,8 @@ public class ProfileFragment extends Fragment {
 
                 // Set user details to TextViews
                 nameTextView.setText(username);
-                firstNameTextView.setText("First Name: " + firstName);
-                lastNameTextView.setText("Last Name: " + lastName);
+                firstNameTextView.setText(firstName);
+                lastNameTextView.setText(lastName);
             } catch (Exception e) {
                 Log.e("ProfileFragment", "Error reading cursor data", e);
             } finally {

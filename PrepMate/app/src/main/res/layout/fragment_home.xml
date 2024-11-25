@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -18,7 +18,7 @@
             android:id="@+id/btnNotify"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="20dp"
             android:rotation="25"
             android:src="@drawable/ic_notif"
             android:contentDescription="Notifications"
@@ -32,7 +32,7 @@
             android:id="@+id/createPlanText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="100dp"
             android:text="Create Plan"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingTop="55dp"
+        android:paddingTop="80dp"
         android:orientation="vertical">
 
         <!-- Row 1: Breakfast and Lunch -->
@@ -73,8 +73,8 @@
 
             <ImageButton
                 android:id="@+id/btnBreakfast"
-                android:layout_width="170dp"
-                android:layout_height="197dp"
+                android:layout_width="150dp"
+                android:layout_height="167dp"
                 android:background="@drawable/shadow_background"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
@@ -82,59 +82,59 @@
 
             <ImageButton
                 android:id="@+id/btnLunch"
-                android:layout_width="170dp"
-                android:layout_height="197dp"
-                android:layout_marginStart="10dp"
+                android:layout_width="150dp"
+                android:layout_height="167dp"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/shadow_background"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/img_lunch" />
+                app:srcCompat="@drawable/imglunch1" />
         </LinearLayout>
 
         <!-- Row 2: Snack and Dinner -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/btnSnack"
-                android:layout_width="170dp"
-                android:layout_height="197dp"
+                android:layout_width="150dp"
+                android:layout_height="167dp"
                 android:background="@drawable/shadow_background"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/img_snack" />
+                app:srcCompat="@drawable/imgsnacks" />
 
             <ImageButton
                 android:id="@+id/btnDinner"
-                android:layout_width="170dp"
-                android:layout_height="197dp"
-                android:layout_marginStart="10dp"
+                android:layout_width="150dp"
+                android:layout_height="167dp"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/shadow_background"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/img_dinner" />
+                app:srcCompat="@drawable/imgdinner" />
         </LinearLayout>
 
         <!-- Row 3: Midnight Snack and Custom -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/btnMidSnack"
-                android:layout_width="170dp"
-                android:layout_height="197dp"
+                android:layout_width="200dp"
+                android:layout_height="137dp"
                 android:background="@drawable/shadow_background"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/img_mid_snack" />
+                app:srcCompat="@drawable/mid_snack" />
 
 
         </LinearLayout>

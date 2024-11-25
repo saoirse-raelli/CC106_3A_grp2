@@ -3,15 +3,17 @@ package com.example.prepmate.calendar;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,8 +27,8 @@ import java.util.List;
 import java.util.Locale;
 
 import com.example.prepmate.DatabaseHelper;
-
 import com.example.prepmate.RecipeCalendar;
+import com.example.prepmate.home.HomeFragment;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -49,7 +51,8 @@ public class CalendarActivity extends AppCompatActivity {
     private String selectedDate;
 
     // SharedPreferences constants
-    private static final String PREFS_NAME = "DatePrefs";
+    private static final String DATE_PREFS_NAME = "DatePrefs";
+    private static final String LOGIN_PREFS_NAME = "LoginPrefs";
     private static final String SELECTED_DATE_KEY = "selectedDate";
 
     @Override
@@ -62,6 +65,9 @@ public class CalendarActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
+
+
         // Initialize UI elements
         calendarView = findViewById(R.id.calendarView);
         selectedDateText = findViewById(R.id.selectedDateText);
@@ -73,12 +79,20 @@ public class CalendarActivity extends AppCompatActivity {
         recipeList = new ArrayList<>();
 
         // Set background color for RecyclerView
-        recipesRecyclerView.setBackgroundColor(0xFFFFC0CB);
+        recipesRecyclerView.setBackgroundColor(0xFFF6E3D5); // A soft nude color
+        calendarView.setBackgroundColor(0xFFFEF9F7); // A very soft nude color
 
         // Set up RecyclerView
         calendarAdapter = new CalendarAdapter(recipeList);
         recipesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         recipesRecyclerView.setAdapter(calendarAdapter);
+
+        int userId = getLoggedInUserId();
+        if (userId == -1) {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+            Log.e("CalendarActivity", "No logged-in user found.");
+            return; // Exit if no user is logged in
+        }
 
         // Check if we need to reset the activity
         boolean reset = getIntent().getBooleanExtra("reset", false);
@@ -93,9 +107,10 @@ public class CalendarActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 // Format the selected date as needed
                 selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth; // Example format
-                selectedDateText.setText("Selected Date: " + selectedDate);
+                selectedDateText.setText("                    " + selectedDate);
                 addRecipesButton.setText("Select a Meal"); // Update button text
-                loadRecipesForDate(selectedDate); // Load recipes for the newly selected date
+                loadRecipesForDate(selectedDate, userId); // Load recipes for the newly selected date
+                saveSelectedDate(selectedDate);
             }
         });
 
@@ -104,105 +119,112 @@ public class CalendarActivity extends AppCompatActivity {
         if (storedDate != null) {
             // If a date is stored, set the CalendarView to that date
             selectedDate = storedDate;
-            selectedDateText.setText("Selected Date: " + selectedDate);
+            selectedDateText.setText("                    " + selectedDate);
             calendarView.setDate(convertDateStringToMillis(selectedDate), true, true);
-            loadRecipesForDate(selectedDate); // Load recipes for the selected date
+            loadRecipesForDate(selectedDate, userId); // Load recipes for the selected date
+            saveSelectedDate(selectedDate);
+            addRecipesButton.setText("Select a Meal");
         } else {
             // Initialize with today's date if no date is stored
             selectedDate = String.valueOf(System.currentTimeMillis());
             calendarView.setDate(System.currentTimeMillis(), true, true);
-            addRecipesButton.setText("Select a Date");
+            addRecipesButton.setText("                         SELECT A DATE");
         }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle the back navigation
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    // Method to save the selected date
     private void saveSelectedDate(String date) {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(DATE_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SELECTED_DATE_KEY, date);
         editor.apply();
     }
 
-    // Method to retrieve the selected date
     private String getSelectedDate() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        return sharedPreferences.getString(SELECTED_DATE_KEY, null); // Return null if no date is stored
+        SharedPreferences sharedPreferences = getSharedPreferences(DATE_PREFS_NAME, MODE_PRIVATE);
+        return sharedPreferences.getString(SELECTED_DATE_KEY, null);
     }
 
-    // Method to convert a date string to milliseconds
     private long convertDateStringToMillis(String dateString) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
             Date date = sdf.parse(dateString);
-            return date != null ? date.getTime() : 0; // Return milliseconds
+            return date != null ? date.getTime() : 0;
         } catch (ParseException e) {
             e.printStackTrace();
-            return System.currentTimeMillis(); // Return current time if parsing fails
+            return System.currentTimeMillis();
         }
     }
 
-    private void loadRecipesForDate(String date) {
+    private void loadRecipesForDate(String date, int userId) {
         recipeList.clear();
 
-        // Fetch calendar entry for the selected date
-        Cursor cursor = databaseHelper.getCalendarEntryByDate(date);
+        Cursor cursor = databaseHelper.getCalendarEntryByDate(date, userId);
         if (cursor != null && cursor.moveToFirst()) {
+            Log.d("CalendarActivity", "Calendar entry found for date: " + date);
             int breakfastId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_BREAKFAST_ID));
             int lunchId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_LUNCH_ID));
             int snacksId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_SNACKS_ID));
             int dinnerId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_DINNER_ID));
             int midnightSnacksId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_MIDNIGHT_SNACKS_ID));
 
-            addRecipeToList(breakfastId, "Breakfast");
-            addRecipeToList(lunchId, "Lunch");
-            addRecipeToList(snacksId, "Snacks");
-            addRecipeToList(dinnerId, "Dinner");
-            addRecipeToList(midnightSnacksId, "Midnight Snacks");
+            addRecipeToList(breakfastId, "Breakfast", userId);
+            addRecipeToList(lunchId, "Lunch", userId);
+            addRecipeToList(snacksId, "Snacks", userId);
+            addRecipeToList(dinnerId, "Dinner", userId);
+            addRecipeToList(midnightSnacksId, "Midnight Snacks", userId);
 
             cursor.close();
         } else {
-            addPlaceholders(); // Add placeholders if no recipes are found
+            Log.d("CalendarActivity", "No calendar entry found for date: " + date);
+            addPlaceholders();
         }
 
-        calendarAdapter.notifyDataSetChanged(); // Notify adapter of data change
+        calendarAdapter.notifyDataSetChanged();
     }
 
-    private void addRecipeToList(int recipeId, String category) {
+    private void addRecipeToList(int recipeId, String category, int userId) {
         if (recipeId != -1) {
-            RecipeCalendar recipe = databaseHelper.getRecipeById(recipeId, category);
+            RecipeCalendar recipe = databaseHelper.getRecipeById(recipeId, category, userId);
             if (recipe != null) {
                 recipeList.add(recipe);
             } else {
-                recipeList.add(new RecipeCalendar(-1, "No " + category, 0, 0, category));
+                Log.d("CalendarActivity", "No recipe found for ID: " + recipeId + " in category: " + category);
+                recipeList.add(new RecipeCalendar(-1, "No " + category, 0, 0, category, userId));
             }
         } else {
-            recipeList.add(new RecipeCalendar(-1, "No " + category, 0, 0, category));
+            recipeList.add(new RecipeCalendar(-1, "No " + category, 0, 0, category, userId));
         }
     }
 
     private void addPlaceholders() {
-        recipeList.add(new RecipeCalendar(-1, "No Breakfast", 0, 0, "Breakfast"));
-        recipeList.add(new RecipeCalendar(-1, "No Lunch", 0, 0, "Lunch"));
-        recipeList.add(new RecipeCalendar(-1, "No Snacks", 0, 0, "Snacks"));
-        recipeList.add(new RecipeCalendar(-1, "No Dinner", 0, 0, "Dinner"));
-        recipeList.add(new RecipeCalendar(-1, "No Midnight Snacks", 0, 0, "Midnight Snacks"));
+        recipeList.add(new RecipeCalendar(-1, "No Breakfast", 0, 0, "Breakfast", 0));
+        recipeList.add(new RecipeCalendar(-1, "No Lunch", 0, 0, "Lunch", 0));
+        recipeList.add(new RecipeCalendar(-1, "No Snacks", 0, 0, "Snacks", 0));
+        recipeList.add(new RecipeCalendar(-1, "No Dinner", 0, 0, "Dinner", 0));
+        recipeList.add(new RecipeCalendar(-1, "No Midnight Snacks", 0, 0, "Midnight Snacks", 0));
     }
 
+    private int getLoggedInUserId() {
+        SharedPreferences sharedPreferences = getSharedPreferences(LOGIN_PREFS_NAME, MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("user_id", -1);
+        Log.d("CalendarActivity", "Retrieved user_id: " + userId);
+        return userId;
+    }
 
     // Method to clear the selected date from SharedPreferences
     private void clearSelectedDate() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(DATE_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(SELECTED_DATE_KEY); // Remove the stored selected date
-        editor.apply();}
+        selectedDateText.setText("");
+        editor.apply();
+    }
 }

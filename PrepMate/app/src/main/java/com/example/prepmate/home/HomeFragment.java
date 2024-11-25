@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.prepmate.NotificationMainActivity;
 import com.example.prepmate.R;
+import com.example.prepmate.TodayActivity;
 import com.example.prepmate.calendar.CalendarActivity;
 import com.example.prepmate.home.breakfastrecipes.BreakfastRecipesActivity;
 import com.example.prepmate.home.dinnerrecipes.DinnerRecipesActivity;
@@ -29,7 +29,7 @@ import com.example.prepmate.home.snacksrecipes.SnacksRecipesActivity;
  */
 public class HomeFragment extends Fragment {
 
-    ImageButton btnCustom, btnBreakfast, btnLunch, btnSnack, btnDinner, btnMidSnack, btnNotifications;
+    ImageButton btnNotify, btnBreakfast, btnLunch, btnSnack, btnDinner, btnMidSnack, btnNotifications;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -128,6 +128,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        btnNotify = view.findViewById(R.id.btnNotify);
+        btnNotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openTodayActivity();
+            }
+        });
+
 
 
 
@@ -181,6 +189,13 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), CalendarActivity.class);
             intent.putExtra("reset", true);
             Log.d("SendIntent", "Sending reset = true");
+            startActivity(intent);
+        }
+    }
+
+    private void openTodayActivity() {
+        if (getActivity() != null) {  // Add null check for safety
+            Intent intent = new Intent(getActivity(), TodayActivity.class);
             startActivity(intent);
         }
     }

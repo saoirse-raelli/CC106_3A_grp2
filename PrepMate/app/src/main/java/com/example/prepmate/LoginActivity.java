@@ -31,14 +31,13 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.login_btn);
         TextView signUpText = findViewById(R.id.sign_up_text);
 
-        // Check if the user is already logged in
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
         if (isLoggedIn) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            int userId = sharedPreferences.getInt("user_id", -1);
+            Log.d("LoginActivity", "User already logged in with ID: " + userId);
+            navigateToMainActivity();
         }
 
         // LOGIN BUTTON
@@ -48,47 +47,47 @@ public class LoginActivity extends AppCompatActivity {
                 String username = usernameInput.getText().toString().trim();
                 String password = passwordInput.getText().toString().trim();
 
-                if (username.isEmpty() || password.isEmpty()) {
+                if (username.isEmpty() || password.isEmpty() || username.trim().isEmpty() || password.trim().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (databaseHelper.checkUser(username, password)) {
-                    // Retrieve user_id after successful login
                     int userId = databaseHelper.getUserId(username, password);
 
                     if (userId != -1) {
-                        // Save login state and user_id in SharedPreferences
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean("isLoggedIn", true);
                         editor.putInt("user_id", userId);
                         editor.apply();
 
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-                        // Navigate to MainActivity
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        navigateToMainActivity();
                     } else {
+                        Log.e("LoginActivity", "Error retrieving user ID for username: " + username);
                         Toast.makeText(LoginActivity.this, "Error retrieving user ID.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Log.d("LoginPage", "Invalid credentials: " + username + ", " + password);
+                    Log.d("LoginActivity", "Invalid credentials: " + username);
                     Toast.makeText(LoginActivity.this, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
-                    usernameInput.setText(""); // Clear input fields
+                    usernameInput.setText("");
                     passwordInput.setText("");
+                    usernameInput.requestFocus();
                 }
             }
         });
 
         // SIGN UP TEXT REDIRECT TO SIGN UP ACTIVITY
-        signUpText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
+        signUpText.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
         });
     }
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
+

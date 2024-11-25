@@ -671,32 +671,52 @@ public List<Recipe> getAllRecipes(int userId) {
 
     public Cursor getAllBreakfastRecipesForCalendar() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT breakfast_id, title, hours, minutes FROM " + TABLE_BREAKFAST, null);
+        String query = "SELECT B.breakfast_id, B.title, B.hours, B.minutes, U.user_id " +
+                "FROM " + TABLE_BREAKFAST + " AS B " +
+                "JOIN " + TABLE_USERS + " AS U ON B.user_id = U.user_id";
+        return db.rawQuery(query, null);
     }
+
 
 
     public Cursor getAllLunchRecipesForCalendar() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT lunch_id, title, hours, minutes FROM " + TABLE_LUNCH, null);
+        String query = "SELECT B.lunch_id, B.title, B.hours, B.minutes, U.user_id " +
+                "FROM " + TABLE_LUNCH + " AS B " +
+                "JOIN " + TABLE_USERS + " AS U ON B.user_id = U.user_id";
+        return db.rawQuery(query, null);
     }
+
 
 
     public Cursor getAllSnacksRecipesForCalendar() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT snacks_id, title, hours, minutes FROM " + TABLE_SNACKS, null);
+        String query = "SELECT B.snacks_id, B.title, B.hours, B.minutes, U.user_id " +
+                "FROM " + TABLE_SNACKS + " AS B " +
+                "JOIN " + TABLE_USERS + " AS U ON B.user_id = U.user_id";
+        return db.rawQuery(query, null);
     }
+
 
 
     public Cursor getAllDinnerRecipesForCalendar() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT dinner_id, title, hours, minutes FROM " + TABLE_DINNER, null);
+        String query = "SELECT B.dinner_id, B.title, B.hours, B.minutes, U.user_id " +
+                "FROM " + TABLE_DINNER + " AS B " +
+                "JOIN " + TABLE_USERS + " AS U ON B.user_id = U.user_id";
+        return db.rawQuery(query, null);
     }
+
 
 
     public Cursor getAllMidnightSnacksRecipesForCalendar() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT midnightsnacks_id, title, hours, minutes FROM " + TABLE_MIDNIGHT_SNACKS, null);
+        String query = "SELECT B.midnightsnacks_id, B.title, B.hours, B.minutes, U.user_id " +
+                "FROM " + TABLE_MIDNIGHT_SNACKS + " AS B " +
+                "JOIN " + TABLE_USERS + " AS U ON B.user_id = U.user_id";
+        return db.rawQuery(query, null);
     }
+
 
     public boolean isDateInCalendar(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -711,23 +731,32 @@ public List<Recipe> getAllRecipes(int userId) {
     }
 
 
-    public void updateCalendarEntry(String date, int recipeId, String category) {
+    public void updateCalendarEntry(String date, int recipeId, String category, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         String column = getColumnForCategory(category);
         values.put(column, recipeId);
+        values.put("user_id", userId);
         db.update(TABLE_CALENDAR, values, COLUMN_CALENDAR_SELECTED_DATE + " = ?", new String[]{date});
     }
 
 
-    public void insertCalendarEntry(String date, int recipeId, String category) {
+    public void insertCalendarEntry(String date, int recipeId, String category, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_CALENDAR_SELECTED_DATE, date);
+        values.put("user_id", userId); // Insert the user_id
         String column = getColumnForCategory(category);
         values.put(column, recipeId);
-        db.insert(TABLE_CALENDAR, null, values);
+
+        long result = db.insert(TABLE_CALENDAR, null, values);
+        if (result == -1) {
+            Log.e("DatabaseHelper", "Failed to insert calendar entry for date: " + date + " and category: " + category);
+        } else {
+            Log.d("DatabaseHelper", "Calendar entry inserted for date: " + date + " and category: " + category);
+        }
     }
+
 
 
     private String getColumnForCategory(String category) {
@@ -748,13 +777,16 @@ public List<Recipe> getAllRecipes(int userId) {
     }
 
 
-    public Cursor getCalendarEntryByDate(String date) {
+    public Cursor getCalendarEntryByDate(String date, int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_CALENDAR, null, COLUMN_CALENDAR_SELECTED_DATE + " = ?", new String[]{date}, null, null, null);
+        String selection = COLUMN_CALENDAR_SELECTED_DATE + " = ? AND user_id = ?";
+        String[] selectionArgs = { date, String.valueOf(userId) };
+        return db.query(TABLE_CALENDAR, null, selection, selectionArgs, null, null, null);
     }
 
 
-    public RecipeCalendar getRecipeById(int recipeId, String category) {
+
+    public RecipeCalendar getRecipeById(int recipeId, String category, int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         RecipeCalendar recipe = null;
@@ -784,7 +816,7 @@ public List<Recipe> getAllRecipes(int userId) {
                     String title = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_TITLE)); // Adjust based on the table
                     int hours = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_HOURS)); // Adjust based on the table
                     int minutes = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_MINUTES)); // Adjust based on the table
-                    recipe = new RecipeCalendar(recipeId, title, hours, minutes, category);
+                    recipe = new RecipeCalendar(recipeId, title, hours, minutes, category, userId);
                 }
             } finally {
                 cursor.close();

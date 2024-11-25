@@ -2,6 +2,7 @@ package com.example.prepmate.calendar.midnightsnackscalendar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,24 +13,27 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prepmate.DatabaseHelper;
+import java.util.List;
+
 import com.example.prepmate.R;
 import com.example.prepmate.RecipeCalendar;
+import com.example.prepmate.DatabaseHelper;
 import com.example.prepmate.calendar.CalendarActivity;
 
-import java.util.List;
 
 public class MidnightSnacksCalendarAdapter extends RecyclerView.Adapter<MidnightSnacksCalendarAdapter.MidnightSnacksViewHolder> {
     private List<RecipeCalendar> midnightsnacksRecipes;
     private String selectedDate;
     private Context context;
     private DatabaseHelper databaseHelper;
+    private int userId; // Ensure this is properly passed and used
 
-    public MidnightSnacksCalendarAdapter(List<RecipeCalendar> midnightsnacksRecipes, String selectedDate, Context context) {
+    public MidnightSnacksCalendarAdapter(List<RecipeCalendar> midnightsnacksRecipes, String selectedDate, Context context, int userId) {
         this.midnightsnacksRecipes = midnightsnacksRecipes;
         this.selectedDate = selectedDate;
         this.context = context;
-        this.databaseHelper = new DatabaseHelper(context); // Initialize the DatabaseHelper once
+        this.userId = userId; // Initialize userId correctly
+        this.databaseHelper = new DatabaseHelper(context); // Initialize DatabaseHelper
     }
 
     @NonNull
@@ -48,13 +52,16 @@ public class MidnightSnacksCalendarAdapter extends RecyclerView.Adapter<Midnight
         holder.categoryTextView.setText("Midnight Snacks");
 
         holder.addMealButton.setOnClickListener(v -> {
-            int snacksId = recipe.getId(); // Get the ID of the recipe
+            int midnightsnacksId = recipe.getId(); // Get the ID of the recipe
 
-            // Update or insert the breakfast ID for the selected date
+            // Log the userId to debug
+            Log.d("MidnightSnacksCalendarAdapter", "Inserting recipe with userId: " + userId);
+
+            // Update or insert the snacks ID for the selected date
             if (databaseHelper.isDateInCalendar(selectedDate)) {
-                databaseHelper.updateCalendarEntry(selectedDate, snacksId, "Midnight Snacks");
+                databaseHelper.updateCalendarEntry(selectedDate, midnightsnacksId, "Midnight Snacks", userId);
             } else {
-                databaseHelper.insertCalendarEntry(selectedDate, snacksId, "Midnight Snacks");
+                databaseHelper.insertCalendarEntry(selectedDate, midnightsnacksId, "Midnight Snacks", userId);
             }
 
             Toast.makeText(context, "Added " + recipe.getTitle() + " to calendar!", Toast.LENGTH_SHORT).show();
