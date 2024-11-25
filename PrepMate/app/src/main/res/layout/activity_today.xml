@@ -3,11 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         app:title="Today's Meal"
+        android:background="@color/primaryColor"
+        app:titleTextColor="@color/primaryDarkColor"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:navigationIcon="@drawable/ic_back"/>
