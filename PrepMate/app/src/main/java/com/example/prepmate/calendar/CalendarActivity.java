@@ -1,5 +1,6 @@
 package com.example.prepmate.calendar;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,10 +14,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prepmate.MainActivity;
 import com.example.prepmate.R;
 
 import java.text.ParseException;
@@ -62,10 +65,9 @@ public class CalendarActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
 
 
         // Initialize UI elements
@@ -132,13 +134,19 @@ public class CalendarActivity extends AppCompatActivity {
         }
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            // Navigate back to MainActivity
+            Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish(); // Finish the current activity to avoid stacking
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void saveSelectedDate(String date) {
         SharedPreferences sharedPreferences = getSharedPreferences(DATE_PREFS_NAME, MODE_PRIVATE);
