@@ -1,5 +1,6 @@
 package com.example.prepmate.calendar.dinnercalendar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -67,6 +68,7 @@ public class DinnerCalendarAdapter extends RecyclerView.Adapter<DinnerCalendarAd
             Toast.makeText(context, "Added " + recipe.getTitle() + " to calendar!", Toast.LENGTH_SHORT).show();
 
             // Redirect to CalendarActivity
+            // Pass selectedDate back to the calling activity
             Intent intent = new Intent(context, CalendarActivity.class);
             intent.putExtra("SELECTED_DATE", selectedDate);
             context.startActivity(intent);

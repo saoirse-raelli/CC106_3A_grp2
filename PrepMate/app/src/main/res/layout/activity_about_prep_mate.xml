@@ -30,10 +30,9 @@
         android:id="@+id/imageViewCenter"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/prepnewlogo"
+        android:src="@drawable/logoprepnew"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        android:background="@drawable/shadow_background"
         android:contentDescription="Image in the center"
         android:layout_marginBottom="16dp" />
 

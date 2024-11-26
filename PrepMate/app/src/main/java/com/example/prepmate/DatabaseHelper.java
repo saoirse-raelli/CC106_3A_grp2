@@ -827,5 +827,47 @@ public List<Recipe> getAllRecipes(int userId) {
 
     }
 
+    public Today getRecipeTodayById(int recipeId, String category, int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        Today recipe = null;
+
+
+        switch (category) {
+            case "Breakfast":
+                cursor = db.query(TABLE_BREAKFAST, null, COLUMN_BREAKFAST_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+            case "Lunch":
+                cursor = db.query(TABLE_LUNCH, null, COLUMN_LUNCH_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+            case "Snacks":
+                cursor = db.query(TABLE_SNACKS, null, COLUMN_SNACKS_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+            case "Dinner":
+                cursor = db.query(TABLE_DINNER, null, COLUMN_DINNER_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+            case "Midnight Snacks":
+                cursor = db.query(TABLE_MIDNIGHT_SNACKS, null, COLUMN_MIDNIGHT_SNACKS_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                break;
+        }
+
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    String title = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_TITLE)); // Adjust based on the table
+                    int hours = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_HOURS)); // Adjust based on the table
+                    int minutes = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_MINUTES)); // Adjust based on the table
+                    String ingredients = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_INGREDIENTS));
+                    String procedures = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_PROCEDURES));
+                    recipe = new Today(recipeId, title, hours, minutes, category, userId, ingredients, procedures);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return recipe;
+
+    }
+
 
 }

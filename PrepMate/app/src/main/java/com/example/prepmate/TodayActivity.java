@@ -25,7 +25,10 @@ public class TodayActivity extends AppCompatActivity {
     private TodayAdapter todayAdapter;
     private int userId;
     private static final String LOGIN_PREFS_NAME = "LoginPrefs";  // SharedPreferences file name
-    private ArrayList<RecipeCalendar> recipeList = new ArrayList<>();
+
+    private ArrayList<Today> recipeList = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,14 +98,13 @@ public class TodayActivity extends AppCompatActivity {
      */
     private void addRecipeToList(int recipeId, String category, int userId) {
         if (recipeId != -1) {
-            RecipeCalendar recipe = databaseHelper.getRecipeById(recipeId, category, userId);
+
+            Today recipe = databaseHelper.getRecipeTodayById(recipeId, category, userId);
             if (recipe != null) {
                 recipeList.add(recipe);
             } else {
-                recipeList.add(new RecipeCalendar(-1, "No " + category, 0, 0, category, userId));
+                recipeList.add(new Today(-1, "No " + category, 0, 0, category, userId, "None","None"));
             }
-        } else {
-            recipeList.add(new RecipeCalendar(-1, "No " + category, 0, 0, category, userId));
         }
     }
 
@@ -110,11 +112,14 @@ public class TodayActivity extends AppCompatActivity {
      * Adds placeholders for all meal categories.
      */
     private void addPlaceholders() {
-        recipeList.add(new RecipeCalendar(-1, "No Breakfast", 0, 0, "Breakfast", 0));
-        recipeList.add(new RecipeCalendar(-1, "No Lunch", 0, 0, "Lunch", 0));
-        recipeList.add(new RecipeCalendar(-1, "No Snacks", 0, 0, "Snacks", 0));
-        recipeList.add(new RecipeCalendar(-1, "No Dinner", 0, 0, "Dinner", 0));
-        recipeList.add(new RecipeCalendar(-1, "No Midnight Snacks", 0, 0, "Midnight Snacks", 0));
+
+        recipeList.add(new Today(-1, "No Breakfast", 0, 0, "Breakfast", 0, "None", "None"));
+        recipeList.add(new Today(-1, "No Lunch", 0, 0, "Lunch", 0 ,"None", "None"));
+        recipeList.add(new Today(-1, "No Snacks", 0, 0, "Snacks", 0, "None", "None"));
+        recipeList.add(new Today(-1, "No Dinner", 0, 0, "Dinner", 0, "None", "None"));
+        recipeList.add(new Today(-1, "No Midnight Snacks", 0, 0, "Midnight Snacks", 0, "None", "None"));
+
+
     }
 
     /**

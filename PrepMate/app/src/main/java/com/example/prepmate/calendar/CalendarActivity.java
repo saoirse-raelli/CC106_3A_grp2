@@ -135,6 +135,7 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     @Override
+
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             // Navigate back to MainActivity
@@ -146,7 +147,6 @@ public class CalendarActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     private void saveSelectedDate(String date) {
         SharedPreferences sharedPreferences = getSharedPreferences(DATE_PREFS_NAME, MODE_PRIVATE);
