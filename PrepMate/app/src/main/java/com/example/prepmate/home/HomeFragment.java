@@ -32,7 +32,6 @@ public class HomeFragment extends Fragment {
     ImageButton btnNotify, btnBreakfast, btnLunch, btnSnack, btnDinner, btnMidSnack, btnNotifications;
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -41,7 +40,6 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -75,8 +73,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        // Initialize buttons
 
         btnBreakfast = view.findViewById(R.id.btnBreakfast);
         btnBreakfast.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +115,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-        // Initialize btnNotifications
         btnNotifications = view.findViewById(R.id.btnNotifications);
         btnNotifications.setOnClickListener(new View.OnClickListener() {
             @Override

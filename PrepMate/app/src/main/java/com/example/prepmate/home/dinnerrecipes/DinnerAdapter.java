@@ -45,12 +45,10 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        // Bind data to the view holder
         holder.dinnerTitle_txt.setText(dinnerTitle.get(position));
         holder.hours_txt.setText(hours.get(position));
         holder.minutes_txt.setText(minutes.get(position));
 
-        // OnClickListener to open UpdateActivity with all data
         holder.mainLayout.setOnClickListener(view -> {
             Intent intent = new Intent(context, UpdateDinnerActivity.class);
             intent.putExtra("id", newDinnerId.get(position));
@@ -60,7 +58,6 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.MyViewHold
             intent.putExtra("ingredients", ingredients.get(position));
             intent.putExtra("procedures", procedures.get(position));
 
-            // Start UpdateActivity
             activity.startActivityForResult(intent, 1);
         });
     }
@@ -77,7 +74,6 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.MyViewHold
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            // Initialize the views
             dinnerTitle_txt = itemView.findViewById(R.id.title);
             hours_txt = itemView.findViewById(R.id.hours);
             minutes_txt = itemView.findViewById(R.id.minutes);

@@ -25,17 +25,14 @@ public class AddDinnerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_dinner);
 
-        // Set up the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Enable the back button
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Show the back icon
-            getSupportActionBar().setDisplayShowHomeEnabled(true); // Ensure the icon is shown
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        // Initialize views
         title_input = findViewById(R.id.title_input);
         hours_input = findViewById(R.id.spinner_hours);
         minutes_input = findViewById(R.id.spinner_minutes);
@@ -43,10 +40,9 @@ public class AddDinnerActivity extends AppCompatActivity {
         procedures_input = findViewById(R.id.procedures_input);
         save_button = findViewById(R.id.save_button);
 
-        // Set up Spinners with hours and minutes options
         ArrayAdapter<CharSequence> hoursAdapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.hours_array, // Define this array in strings.xml
+                R.array.hours_array,
                 android.R.layout.simple_spinner_item
         );
         hoursAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -54,13 +50,12 @@ public class AddDinnerActivity extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> minutesAdapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.minutes_array, // Define this array in strings.xml
+                R.array.minutes_array,
                 android.R.layout.simple_spinner_item
         );
         minutesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         minutes_input.setAdapter(minutesAdapter);
 
-        // Save button logic
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,37 +67,33 @@ public class AddDinnerActivity extends AppCompatActivity {
                 String hours = hours_input.getSelectedItem().toString();
                 String minutes = minutes_input.getSelectedItem().toString();
 
-                // Database method for adding dinner in the dinner_table
                 databaseHelper.addDinnerRecipe(
                         title_input.getText().toString().trim(),
                         hours,
                         minutes,
                         ingredients_input.getText().toString().trim(),
                         procedures_input.getText().toString().trim(),
-                        userId // Pass the user_id of the logged-in user
+                        userId
                 );
 
                 Intent resultIntent = new Intent();
                 setResult(RESULT_OK, resultIntent);
-                finish(); // Close AddActivity and go back to CustomRecipesActivity
+                finish();
             }
         });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle the back navigation
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed(); // Or use finish() to close the activity
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    // Method to get the logged-in user's ID (You should implement this based on your login system)
     private int getLoggedInUserId() {
-        // Example logic for retrieving the user_id from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        return sharedPreferences.getInt("user_id", -1); // Return the user_id stored during login, or -1 if not logged in
+        return sharedPreferences.getInt("user_id", -1);
     }
 }

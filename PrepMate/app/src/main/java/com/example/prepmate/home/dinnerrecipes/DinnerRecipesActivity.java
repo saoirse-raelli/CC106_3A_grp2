@@ -31,27 +31,23 @@ public class DinnerRecipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dinner_recipes);
 
-        // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
 
 
-        // Set up the Toolbar
         Toolbar toolbar = findViewById(R.id.dinner_recipes_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable the back icon
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Initialize DatabaseHelper and lists
         databaseHelper = new DatabaseHelper(this);
         newDinnerId = new ArrayList<>();
         dinnerTitle = new ArrayList<>();
         hours = new ArrayList<>();
         minutes = new ArrayList<>();
-        ingredients = new ArrayList<>();  // Initialize ingredients list
+        ingredients = new ArrayList<>();
         procedures = new ArrayList<>();
 
         storeDataInArrays();
 
-        // Set up the RecyclerView and adapter
         dinnerAdapter = new DinnerAdapter(DinnerRecipesActivity.this, this, newDinnerId, dinnerTitle, hours, minutes, ingredients, procedures);
         recyclerView.setAdapter(dinnerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DinnerRecipesActivity.this));
@@ -59,7 +55,6 @@ public class DinnerRecipesActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu with the 'Add Recipe' item
         getMenuInflater().inflate(R.menu.toolbar_add_recipe, menu);
         return true;
     }
@@ -67,24 +62,21 @@ public class DinnerRecipesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_recipe) {
-            // Handle the 'Add Recipe' action
+
             Intent intent = new Intent(DinnerRecipesActivity.this, AddDinnerActivity.class);
-            startActivityForResult(intent, 1);  // Pass the request code 1
+            startActivityForResult(intent, 1);
             return true;
         }
 
-        // Handle the back navigation
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed(); // Or use finish() to close the activity
+            onBackPressed();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    // Method to fetch data from the database
     void storeDataInArrays() {
-        // Clear the existing data in the lists
         newDinnerId.clear();
         dinnerTitle.clear();
         hours.clear();
@@ -92,11 +84,10 @@ public class DinnerRecipesActivity extends AppCompatActivity {
         ingredients.clear();
         procedures.clear();
 
-        // Get the user_id of the logged-in user
         int userId = getLoggedInUserId();
         if (userId == -1) {
             Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
-            return; // Exit the method if no user is logged in
+            return;
         }
 
         Cursor cursor = databaseHelper.readAllDinnerRecipes(userId);
@@ -104,12 +95,12 @@ public class DinnerRecipesActivity extends AppCompatActivity {
             Toast.makeText(this, "No Data.", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                newDinnerId.add(cursor.getString(0));  // ID
-                dinnerTitle.add(cursor.getString(1));  // Title
-                hours.add(cursor.getString(2));     // Hours
-                minutes.add(cursor.getString(3));   // Minutes
-                ingredients.add(cursor.getString(4)); // Ingredients
-                procedures.add(cursor.getString(5));  // Procedures
+                newDinnerId.add(cursor.getString(0));
+                dinnerTitle.add(cursor.getString(1));
+                hours.add(cursor.getString(2));
+                minutes.add(cursor.getString(3));
+                ingredients.add(cursor.getString(4));
+                procedures.add(cursor.getString(5));
             }
         }
     }
@@ -123,9 +114,8 @@ public class DinnerRecipesActivity extends AppCompatActivity {
         }
     }
 
-    // Method to get the logged-in user's ID (You should implement this based on your login system)
     private int getLoggedInUserId() {
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        return sharedPreferences.getInt("user_id", -1); // Return the user_id stored during login, or -1 if not logged in
+        return sharedPreferences.getInt("user_id", -1);
     }
 }

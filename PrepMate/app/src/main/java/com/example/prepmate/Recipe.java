@@ -8,7 +8,6 @@ public class Recipe {
     private String ingredients;
     private String procedures;
 
-    // Constructor
     public Recipe(String title, String hours, String minutes, String category, String ingredients, String procedures) {
         this.title = title;
         this.hours = hours;
@@ -18,7 +17,6 @@ public class Recipe {
         this.procedures = procedures;
     }
 
-    // Getters and Setters
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 

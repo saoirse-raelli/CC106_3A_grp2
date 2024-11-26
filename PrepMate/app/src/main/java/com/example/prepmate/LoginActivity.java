@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize the database helper
         databaseHelper = new DatabaseHelper(this);
 
         usernameInput = findViewById(R.id.username_input);
@@ -40,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
             navigateToMainActivity();
         }
 
-        // LOGIN BUTTON
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // SIGN UP TEXT REDIRECT TO SIGN UP ACTIVITY
         signUpText.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);

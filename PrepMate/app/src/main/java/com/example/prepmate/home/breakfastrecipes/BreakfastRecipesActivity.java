@@ -29,26 +29,22 @@ public class BreakfastRecipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breakfast_recipes);
 
-        // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
 
-        // Set up the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable the back icon
 
-        // Initialize DatabaseHelper and lists
         databaseHelper = new DatabaseHelper(this);
         newBreakfastId = new ArrayList<>();
         breakfastTitle = new ArrayList<>();
         hours = new ArrayList<>();
         minutes = new ArrayList<>();
-        ingredients = new ArrayList<>();  // Initialize ingredients list
-        procedures = new ArrayList<>();   // Initialize procedures list
+        ingredients = new ArrayList<>();
+        procedures = new ArrayList<>();
 
         storeDataInArrays();
 
-        // Set up the RecyclerView and adapter
         breakfastAdapter = new BreakfastAdapter(BreakfastRecipesActivity.this, this, newBreakfastId, breakfastTitle, hours, minutes, ingredients, procedures);
         recyclerView.setAdapter(breakfastAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(BreakfastRecipesActivity.this));
@@ -57,7 +53,6 @@ public class BreakfastRecipesActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu with the 'Add Recipe' item
         getMenuInflater().inflate(R.menu.toolbar_add_recipe, menu);
         return true;
     }
@@ -65,15 +60,13 @@ public class BreakfastRecipesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_recipe) {
-            // Handle the 'Add Recipe' action
             Intent intent = new Intent(BreakfastRecipesActivity.this, AddBreakfastActivity.class);
             startActivityForResult(intent, 1);  // Pass the request code 1
             return true;
         }
 
-        // Handle the back navigation
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed(); // Or use finish() to close the activity
+            onBackPressed();
             return true;
         }
 
@@ -81,9 +74,7 @@ public class BreakfastRecipesActivity extends AppCompatActivity {
     }
 
 
-    // Method to fetch data from the database
     void storeDataInArrays() {
-        // Clear the existing data in the lists
         newBreakfastId.clear();
         breakfastTitle.clear();
         hours.clear();
@@ -91,11 +82,10 @@ public class BreakfastRecipesActivity extends AppCompatActivity {
         ingredients.clear();
         procedures.clear();
 
-        // Get the user_id of the logged-in user
         int userId = getLoggedInUserId();
         if (userId == -1) {
             Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
-            return; // Exit the method if no user is logged in
+            return;
         }
 
         Cursor cursor = databaseHelper.readAllBreakfastRecipes(userId);
@@ -122,10 +112,9 @@ public class BreakfastRecipesActivity extends AppCompatActivity {
         }
     }
 
-    // Method to get the logged-in user's ID (You should implement this based on your login system)
     private int getLoggedInUserId() {
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        return sharedPreferences.getInt("user_id", -1); // Return the user_id stored during login, or -1 if not logged in
+        return sharedPreferences.getInt("user_id", -1);
     }
 
 }

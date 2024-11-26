@@ -28,7 +28,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         TextView ingredientsTextView = findViewById(R.id.recipeIngredients);
         TextView proceduresTextView = findViewById(R.id.recipeProcedures);
 
-        // Get data from intent
         Intent intent = getIntent();
         titleTextView.setText(intent.getStringExtra("title"));
         categoryTextView.setText(intent.getStringExtra("category"));
@@ -40,7 +39,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle the back navigation
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;

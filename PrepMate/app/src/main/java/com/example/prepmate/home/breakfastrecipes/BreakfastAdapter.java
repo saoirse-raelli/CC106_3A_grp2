@@ -49,7 +49,6 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.MyVi
         holder.hours_txt.setText(hours.get(position));
         holder.minutes_txt.setText(minutes.get(position));
 
-        // OnClickListener to open UpdateActivity with all data
         holder.mainLayout.setOnClickListener(view -> {
             Intent intent = new Intent(context, UpdateBreakfastActivity.class);
             intent.putExtra("id", newBreakfastId.get(position));
@@ -59,7 +58,6 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.MyVi
             intent.putExtra("ingredients", ingredients.get(position));
             intent.putExtra("procedures", procedures.get(position));
 
-            // Start UpdateActivity
             activity.startActivityForResult(intent, 1);
         });
     }
@@ -76,7 +74,6 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.MyVi
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            // Initialize the views
             breakfastTitle_txt = itemView.findViewById(R.id.title);
             hours_txt = itemView.findViewById(R.id.hours);
             minutes_txt = itemView.findViewById(R.id.minutes);

@@ -16,7 +16,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private OnRecipeClickListener listener;
 
 
-    // Constructor
     public RecipeAdapter(List<Recipe> recipeList, OnRecipeClickListener listener) {
         this.recipeList = recipeList;
         this.listener = listener;
@@ -39,7 +38,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onRecipeClick(recipe); // Pass the clicked recipe to the listener
+                listener.onRecipeClick(recipe);
             }
         });
 

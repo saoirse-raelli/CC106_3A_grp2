@@ -31,13 +31,11 @@ public class UpdateDinnerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_dinner);
 
-        // Set up the Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Enable the back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // This will show the back icon
-        getSupportActionBar().setDisplayShowHomeEnabled(true); // This ensures the icon is shown
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         title_input = findViewById(R.id.title_input2);
         hours_input = findViewById(R.id.spinner_hours2);
@@ -47,18 +45,15 @@ public class UpdateDinnerActivity extends AppCompatActivity {
         update_button = findViewById(R.id.update_button);
         delete_button = findViewById(R.id.delete_button);
 
-        // Get the logged-in user's ID
         userId = getLoggedInUserId();
 
 
-        //Set actionbar title after getAndSetIntentData method
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setTitle(title);
         }
 
 
-        // Set up the spinners for hours and minutes
         ArrayAdapter<CharSequence> hoursAdapter = ArrayAdapter.createFromResource(
                 this, R.array.hours_array, android.R.layout.simple_spinner_item);
         hoursAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,8 +79,8 @@ public class UpdateDinnerActivity extends AppCompatActivity {
                 databaseHelper.updateDinnerRecipe(id, userId, title, hours, minutes, ingredients, procedures);
 
                 Intent resultIntent = new Intent();
-                setResult(RESULT_OK, resultIntent);  // Sending back the result
-                finish(); // Close this activity and return to the previous one
+                setResult(RESULT_OK, resultIntent);
+                finish();
             }
         });
 
@@ -101,7 +96,6 @@ public class UpdateDinnerActivity extends AppCompatActivity {
     void getAndSetIntentData() {
         if (getIntent().hasExtra("id") && getIntent().hasExtra("title") && getIntent().hasExtra("hours") && getIntent().hasExtra("minutes") &&
                 getIntent().hasExtra("ingredients") && getIntent().hasExtra("procedures")){
-            //Getting Data from Intent
             id = getIntent().getStringExtra("id");
             title = getIntent().getStringExtra("title");
             hours = getIntent().getStringExtra("hours");
@@ -109,7 +103,6 @@ public class UpdateDinnerActivity extends AppCompatActivity {
             ingredients = getIntent().getStringExtra("ingredients");
             procedures = getIntent().getStringExtra("procedures");
 
-            //Setting Intent Data
             title_input.setText(title);
             hours_input.setSelection(getIndex(hours_input, hours));
             minutes_input.setSelection(getIndex(minutes_input, minutes));
@@ -156,19 +149,16 @@ public class UpdateDinnerActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle the back navigation
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed(); // Or use finish() to close the activity
+            onBackPressed();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    // Method to get the logged-in user's ID (You should implement this based on your login system)
     private int getLoggedInUserId() {
-        // Example logic for retrieving the user_id from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        return sharedPreferences.getInt("user_id", -1); // Return the user_id stored during login, or -1 if not logged in
+        return sharedPreferences.getInt("user_id", -1);
     }
 }

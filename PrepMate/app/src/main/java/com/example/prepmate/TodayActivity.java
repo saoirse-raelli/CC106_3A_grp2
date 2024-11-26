@@ -40,33 +40,23 @@ public class TodayActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        // Initialize DatabaseHelper
         databaseHelper = new DatabaseHelper(this);
 
-        // Retrieve userId from SharedPreferences
         userId = getLoggedInUserId();
 
-        // Initialize RecyclerView and TodayAdapter
         RecyclerView recyclerView = findViewById(R.id.RecyclerView);
         todayAdapter = new TodayAdapter(recipeList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(todayAdapter);
 
-        // Load recipes for the current date
         String currentDate = getCurrentDate();
         loadRecipesForDate(currentDate, userId);
     }
 
-    /**
-     * Fetch and load recipes for a specific date.
-     *
-     * @param date The date in "YYYY-MM-DD" format.
-     * @param userId The logged-in user's ID.
-     */
+
     private void loadRecipesForDate(String date, int userId) {
         recipeList.clear();
 
-        // Fetch calendar entry for the given date
         Cursor cursor = databaseHelper.getCalendarEntryByDate(date, userId);
         if (cursor != null && cursor.moveToFirst()) {
             int breakfastId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_BREAKFAST_ID));
@@ -83,19 +73,12 @@ public class TodayActivity extends AppCompatActivity {
 
             cursor.close();
         } else {
-            addPlaceholders(); // Add placeholders if no recipes are found
+            addPlaceholders();
         }
 
-        todayAdapter.notifyDataSetChanged(); // Notify adapter of data change
+        todayAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * Adds a recipe to the list based on its ID and category.
-     *
-     * @param recipeId The ID of the recipe.
-     * @param category The category (e.g., "Breakfast").
-     * @param userId The logged-in user's ID.
-     */
     private void addRecipeToList(int recipeId, String category, int userId) {
         if (recipeId != -1) {
 
@@ -108,9 +91,7 @@ public class TodayActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Adds placeholders for all meal categories.
-     */
+
     private void addPlaceholders() {
 
         recipeList.add(new Today(-1, "No Breakfast", 0, 0, "Breakfast", 0, "None", "None"));
@@ -122,21 +103,13 @@ public class TodayActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Gets the current date in "YYYY-MM-DD" format.
-     *
-     * @return The current date as a string.
-     */
+
     private String getCurrentDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(new Date());
     }
 
-    /**
-     * Retrieves the logged-in user's ID from SharedPreferences.
-     *
-     * @return The logged-in user's ID.
-     */
+
     private int getLoggedInUserId() {
         SharedPreferences sharedPreferences = getSharedPreferences(LOGIN_PREFS_NAME, MODE_PRIVATE);
         int userId = sharedPreferences.getInt("user_id", -1); // Default value is -1 if not found

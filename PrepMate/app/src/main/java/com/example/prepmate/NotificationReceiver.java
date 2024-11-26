@@ -15,10 +15,8 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Create the notification channel (required for Android 8.0 and above)
         createNotificationChannel(context);
 
-        // Set up the intent to open TodayActivity when the notification is clicked
         Intent todayIntent = new Intent(context, TodayActivity.class);
         todayIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -28,7 +26,6 @@ public class NotificationReceiver extends BroadcastReceiver {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notifications) // Replace with your app's notification icon
                 .setContentTitle("Daily Reminder")
@@ -37,7 +34,6 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setAutoCancel(true) // Dismiss notification after clicking
                 .setContentIntent(pendingIntent);
 
-        // Show the notification
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
@@ -45,7 +41,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         }
     }
 
-    // Create the notification channel
     private void createNotificationChannel(Context context) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             CharSequence name = "Daily Reminder";

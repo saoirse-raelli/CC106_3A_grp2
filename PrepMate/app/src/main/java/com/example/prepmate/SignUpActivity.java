@@ -15,7 +15,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText lastnameInput;
     private EditText firstnameInput;
-//    private EditText emailInput;
     private EditText usernameInput;
     private EditText passwordInput;
     private DatabaseHelper databaseHelper;
@@ -25,12 +24,10 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        // Initialize the database helper
         databaseHelper = new DatabaseHelper(this);
 
         lastnameInput = findViewById(R.id.lastname_input);
         firstnameInput = findViewById(R.id.firstname_input);
-      //  emailInput = findViewById(R.id.email_input);
         usernameInput = findViewById(R.id.username_input);
         passwordInput = findViewById(R.id.password_input);
 
@@ -40,11 +37,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String lastname = lastnameInput.getText().toString();
                 String firstname = firstnameInput.getText().toString();
-        //        String email = emailInput.getText().toString();
                 String username = usernameInput.getText().toString();
                 String password = passwordInput.getText().toString();
 
-                // Save the input values to the database
                 saveToDatabase(lastname, firstname, username, password);
 
             }
@@ -64,10 +59,9 @@ public class SignUpActivity extends AppCompatActivity {
         databaseHelper.addUser(lastname, firstname, username, password);
         Toast.makeText(SignUpActivity.this, "Sign Up Successful!", Toast.LENGTH_SHORT).show();
 
-        // Intent to start the LoginPage activity
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
         startActivity(intent);
-        finish(); // Optional: finish the SignUpPage so the user can't navigate back
+        finish();
     }
 
 }

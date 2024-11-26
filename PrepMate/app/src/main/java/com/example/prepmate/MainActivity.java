@@ -33,12 +33,10 @@ public class MainActivity extends AppCompatActivity {
         NotificationScheduler.scheduleDailyNotification(this);
 
 
-        // Check if user is logged in: App should start from sign up if not logged in
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
         if (!isLoggedIn) {
-            // If the user is not logged in, redirect them to LoginPage
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -46,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        // METHOD FOR VIEW BINDING
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
@@ -54,20 +51,14 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             int itemId = item.getItemId();
-
             if (itemId == R.id.home) {
-                // Handle home item
-
                 replaceFragment(new HomeFragment());
             } else if (itemId == R.id.profile) {
-                // Handle profile item
                 replaceFragment(new ProfileFragment());
             } else if (itemId == R.id.suggestions) {
-                // Handle profile item
                 replaceFragment(new SuggestionFragment());
             }
-
-            return true; // Return true to display the selected item as the current tab
+            return true;
         });
     }
 
@@ -83,10 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Check if the permission is granted
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
-                // Request permission
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.POST_NOTIFICATIONS},
                         REQUEST_NOTIFICATION_PERMISSION);
