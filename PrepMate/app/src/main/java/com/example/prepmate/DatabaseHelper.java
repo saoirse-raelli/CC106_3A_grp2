@@ -791,83 +791,168 @@ public List<Recipe> getAllRecipes(int userId) {
         Cursor cursor = null;
         RecipeCalendar recipe = null;
 
+        // Determine table and column names based on the category
+        String tableName = null;
+        String idColumn = null;
+        String titleColumn = null;
+        String hoursColumn = null;
+        String minutesColumn = null;
 
         switch (category) {
             case "Breakfast":
-                cursor = db.query(TABLE_BREAKFAST, null, COLUMN_BREAKFAST_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_BREAKFAST;
+                idColumn = COLUMN_BREAKFAST_ID;
+                titleColumn = COLUMN_BREAKFAST_TITLE;
+                hoursColumn = COLUMN_BREAKFAST_HOURS;
+                minutesColumn = COLUMN_BREAKFAST_MINUTES;
                 break;
             case "Lunch":
-                cursor = db.query(TABLE_LUNCH, null, COLUMN_LUNCH_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_LUNCH;
+                idColumn = COLUMN_LUNCH_ID;
+                titleColumn = COLUMN_LUNCH_TITLE;
+                hoursColumn = COLUMN_LUNCH_HOURS;
+                minutesColumn = COLUMN_LUNCH_MINUTES;
                 break;
             case "Snacks":
-                cursor = db.query(TABLE_SNACKS, null, COLUMN_SNACKS_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_SNACKS;
+                idColumn = COLUMN_SNACKS_ID;
+                titleColumn = COLUMN_SNACKS_TITLE;
+                hoursColumn = COLUMN_SNACKS_HOURS;
+                minutesColumn = COLUMN_SNACKS_MINUTES;
                 break;
             case "Dinner":
-                cursor = db.query(TABLE_DINNER, null, COLUMN_DINNER_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_DINNER;
+                idColumn = COLUMN_DINNER_ID;
+                titleColumn = COLUMN_DINNER_TITLE;
+                hoursColumn = COLUMN_DINNER_HOURS;
+                minutesColumn = COLUMN_DINNER_MINUTES;
                 break;
             case "Midnight Snacks":
-                cursor = db.query(TABLE_MIDNIGHT_SNACKS, null, COLUMN_MIDNIGHT_SNACKS_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_MIDNIGHT_SNACKS;
+                idColumn = COLUMN_MIDNIGHT_SNACKS_ID;
+                titleColumn = COLUMN_MIDNIGHT_SNACKS_TITLE;
+                hoursColumn = COLUMN_MIDNIGHT_SNACKS_HOURS;
+                minutesColumn = COLUMN_MIDNIGHT_SNACKS_MINUTES;
                 break;
         }
 
-        if (cursor != null) {
-            try {
-                if (cursor.moveToFirst()) {
-                    String title = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_TITLE)); // Adjust based on the table
-                    int hours = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_HOURS)); // Adjust based on the table
-                    int minutes = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_MINUTES)); // Adjust based on the table
-                    recipe = new RecipeCalendar(recipeId, title, hours, minutes, category, userId);
+        if (tableName != null && idColumn != null) {
+            // Query the database with both recipeId and userId
+            String selection = idColumn + " = ? AND user_id = ?";
+            String[] selectionArgs = {String.valueOf(recipeId), String.valueOf(userId)};
+
+            cursor = db.query(tableName, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                try {
+                    if (cursor.moveToFirst()) {
+                        // Extract the data for this recipe
+                        String title = cursor.getString(cursor.getColumnIndex(titleColumn));
+                        int hours = cursor.getInt(cursor.getColumnIndex(hoursColumn));
+                        int minutes = cursor.getInt(cursor.getColumnIndex(minutesColumn));
+
+                        recipe = new RecipeCalendar(recipeId, title, hours, minutes, category, userId);
+                    }
+                } finally {
+                    cursor.close();
                 }
-            } finally {
-                cursor.close();
             }
         }
+
         return recipe;
-
-
     }
+
 
     public Today getRecipeTodayById(int recipeId, String category, int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         Today recipe = null;
 
+        // Determine table and column names based on the category
+        String tableName = null;
+        String idColumn = null;
+        String titleColumn = null;
+        String hoursColumn = null;
+        String minutesColumn = null;
+        String ingredientsColumn = null;
+        String proceduresColumn = null;
 
         switch (category) {
             case "Breakfast":
-                cursor = db.query(TABLE_BREAKFAST, null, COLUMN_BREAKFAST_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_BREAKFAST;
+                idColumn = COLUMN_BREAKFAST_ID;
+                titleColumn = COLUMN_BREAKFAST_TITLE;
+                hoursColumn = COLUMN_BREAKFAST_HOURS;
+                minutesColumn = COLUMN_BREAKFAST_MINUTES;
+                ingredientsColumn = COLUMN_BREAKFAST_INGREDIENTS;
+                proceduresColumn = COLUMN_BREAKFAST_PROCEDURES;
                 break;
             case "Lunch":
-                cursor = db.query(TABLE_LUNCH, null, COLUMN_LUNCH_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_LUNCH;
+                idColumn = COLUMN_LUNCH_ID;
+                titleColumn = COLUMN_LUNCH_TITLE;
+                hoursColumn = COLUMN_LUNCH_HOURS;
+                minutesColumn = COLUMN_LUNCH_MINUTES;
+                ingredientsColumn = COLUMN_LUNCH_INGREDIENTS;
+                proceduresColumn = COLUMN_LUNCH_PROCEDURES;
                 break;
             case "Snacks":
-                cursor = db.query(TABLE_SNACKS, null, COLUMN_SNACKS_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_SNACKS;
+                idColumn = COLUMN_SNACKS_ID;
+                titleColumn = COLUMN_SNACKS_TITLE;
+                hoursColumn = COLUMN_SNACKS_HOURS;
+                minutesColumn = COLUMN_SNACKS_MINUTES;
+                ingredientsColumn = COLUMN_SNACKS_INGREDIENTS;
+                proceduresColumn = COLUMN_SNACKS_PROCEDURES;
                 break;
             case "Dinner":
-                cursor = db.query(TABLE_DINNER, null, COLUMN_DINNER_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_DINNER;
+                idColumn = COLUMN_DINNER_ID;
+                titleColumn = COLUMN_DINNER_TITLE;
+                hoursColumn = COLUMN_DINNER_HOURS;
+                minutesColumn = COLUMN_DINNER_MINUTES;
+                ingredientsColumn = COLUMN_DINNER_INGREDIENTS;
+                proceduresColumn = COLUMN_DINNER_PROCEDURES;
                 break;
             case "Midnight Snacks":
-                cursor = db.query(TABLE_MIDNIGHT_SNACKS, null, COLUMN_MIDNIGHT_SNACKS_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
+                tableName = TABLE_MIDNIGHT_SNACKS;
+                idColumn = COLUMN_MIDNIGHT_SNACKS_ID;
+                titleColumn = COLUMN_MIDNIGHT_SNACKS_TITLE;
+                hoursColumn = COLUMN_MIDNIGHT_SNACKS_HOURS;
+                minutesColumn = COLUMN_MIDNIGHT_SNACKS_MINUTES;
+                ingredientsColumn = COLUMN_MIDNIGHT_SNACKS_INGREDIENTS;
+                proceduresColumn = COLUMN_MIDNIGHT_SNACKS_PROCEDURES;
                 break;
         }
 
-        if (cursor != null) {
-            try {
-                if (cursor.moveToFirst()) {
-                    String title = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_TITLE)); // Adjust based on the table
-                    int hours = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_HOURS)); // Adjust based on the table
-                    int minutes = cursor.getInt(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_MINUTES)); // Adjust based on the table
-                    String ingredients = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_INGREDIENTS));
-                    String procedures = cursor.getString(cursor.getColumnIndex(COLUMN_MIDNIGHT_SNACKS_PROCEDURES));
-                    recipe = new Today(recipeId, title, hours, minutes, category, userId, ingredients, procedures);
+        if (tableName != null && idColumn != null) {
+            // Query the database with both recipeId and userId
+            String selection = idColumn + " = ? AND user_id = ?";
+            String[] selectionArgs = {String.valueOf(recipeId), String.valueOf(userId)};
+
+            cursor = db.query(tableName, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                try {
+                    if (cursor.moveToFirst()) {
+                        // Extract the data for this recipe
+                        String title = cursor.getString(cursor.getColumnIndex(titleColumn));
+                        int hours = cursor.getInt(cursor.getColumnIndex(hoursColumn));
+                        int minutes = cursor.getInt(cursor.getColumnIndex(minutesColumn));
+                        String ingredients = cursor.getString(cursor.getColumnIndex(ingredientsColumn));
+                        String procedures = cursor.getString(cursor.getColumnIndex(proceduresColumn));
+
+                        recipe = new Today(recipeId, title, hours, minutes, category, userId, ingredients, procedures);
+                    }
+                } finally {
+                    cursor.close();
                 }
-            } finally {
-                cursor.close();
             }
         }
-        return recipe;
 
+        return recipe;
     }
+
 
 
 }
